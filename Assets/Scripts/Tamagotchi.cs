@@ -51,10 +51,10 @@ public class Tamagotchi : MonoBehaviour
 
     void UpdateUI()
     {
-        hungerText.text = "������ : " + (int)Mathf.Clamp(hunger, 0, 100);
-        trainingText.text = "�Ʒõ� : " + (int)Mathf.Clamp(training, 0, 100);
-        playfulnessText.text = "�ų��� : " + (int)Mathf.Clamp(playfulness, 0, 100);
-        cleanlinessText.text = "û�ᵵ : " + (int)Mathf.Clamp(cleanliness, 0, 100);
+        hungerText.text = "먹이기 : " + (int)Mathf.Clamp(hunger, 0, 100);
+        trainingText.text = "훈련하기 : " + (int)Mathf.Clamp(training, 0, 100);
+        playfulnessText.text = "놀아주기 : " + (int)Mathf.Clamp(playfulness, 0, 100);
+        cleanlinessText.text = "씻기기 : " + (int)Mathf.Clamp(cleanliness, 0, 100);
 
         float remainingTime = timeToLive - timer;
         int remainingHours = Mathf.FloorToInt(remainingTime / 3600);
@@ -68,28 +68,28 @@ public class Tamagotchi : MonoBehaviour
     {
         hunger += 10f; // float ������ �߰�
         careScore += 1;
-        Debug.Log("�ٸ���ġ �� ���̱� ! �������� ���� : " + hunger);
+        Debug.Log("배고픔 : " + hunger);
     }
 
     public void Train()
     {
         training += 10f;
         careScore += 1;
-        Debug.Log("�ٸ���ġ �Ʒ��ϱ� ! �Ʒõ��� ���� : " + training);
+        Debug.Log("훈련도 : " + training);
     }
 
     public void Play()
     {
         playfulness += 10f;
         careScore += 1;
-        Debug.Log("�ٸ���ġ ����ֱ� ! �ų����� ���� : " + playfulness);
+        Debug.Log("즐거움 : " + playfulness);
     }
 
     public void Clean()
     {
         cleanliness += 10f;
         careScore += 1;
-        Debug.Log("�ٸ���ġ �ı�� ! û�ᵵ�� ���� : " + cleanliness);
+        Debug.Log("청결도 : " + cleanliness);
     }
 
     void DecreaseStatsOverTime()
@@ -124,7 +124,7 @@ public class Tamagotchi : MonoBehaviour
                 break;
             case State.ADULT:
                 state = State.DEAD;
-                Debug.Log("�ٸ���ġ�� �� ������ ���Ͽ� �ٸ���ġ�� �׾����ϴ�.. ���� ���� �� �� Ű���ּ��� !!");
+                Debug.Log("다마고치가 죽었습니다!!");
                 break;
         }
     }
