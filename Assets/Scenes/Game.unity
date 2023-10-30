@@ -812,7 +812,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 310265813}
         m_TargetAssemblyTypeName: Tamagotchi, Assembly-CSharp
         m_MethodName: Train
         m_Mode: 1
@@ -1587,10 +1587,10 @@ MonoBehaviour:
   - {fileID: 906490343}
   - {fileID: 289888835}
   - {fileID: 433237568}
-  hunger: 100
-  training: 100
-  playfulness: 100
-  cleanliness: 100
+  hunger: 0
+  training: 0
+  playfulness: 0
+  cleanliness: 0
   careScore: 0
   hungerText: {fileID: 1645006400}
   trainingText: {fileID: 444621945}
@@ -6114,7 +6114,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 310265813}
         m_TargetAssemblyTypeName: Tamagotchi, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 1
@@ -8310,7 +8310,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 310265813}
         m_TargetAssemblyTypeName: Tamagotchi, Assembly-CSharp
         m_MethodName: Clean
         m_Mode: 1
