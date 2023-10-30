@@ -26,11 +26,15 @@ public class Tamagotchi : MonoBehaviour
     {
         state = State.EGG;
         timer = 0;
-        foreach (GameObject stage in evolutionStages)
+        if(evolutionStages != null)
         {
-            stage.SetActive(false); // ��� ��ȭ ���� ������Ʈ ��Ȱ��ȭ
+            foreach (GameObject stage in evolutionStages)
+            {
+                stage.SetActive(false); // ��� ��ȭ ���� ������Ʈ ��Ȱ��ȭ
+            }
+            evolutionStages[0].SetActive(true); // �ʱ� ���� (��) Ȱ��ȭ
         }
-        evolutionStages[0].SetActive(true); // �ʱ� ���� (��) Ȱ��ȭ
+     
     }
 
     void Update()
