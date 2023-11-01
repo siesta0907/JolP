@@ -55,12 +55,28 @@ public class FrameManager : MonoBehaviour
     {
         Shop.gameObject.SetActive(true);
     }
+    public void CloseShop()
+    {
+        Shop.gameObject.SetActive(false);
+    }
+
     public void OpenStat()
     {
         Stat.gameObject.SetActive(true);
     }
+
+    public void CloseStat()
+    {
+        Stat.gameObject.SetActive(false);
+    }
+
     public void OpenInventory()
     {
         Inventory.gameObject.SetActive(true);
+    }
+
+    public void CloseInventory()
+    {
+        Inventory.gameObject.SetActive(false);
     }
 }
