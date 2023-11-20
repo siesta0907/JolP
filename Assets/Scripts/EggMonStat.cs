@@ -4,15 +4,18 @@ using UnityEngine;
 
 public static class EggMonStat 
 {
-    public static float health, intellect, likeability, cleanliness, full;
+    public static float health, maxHealth, intellect, likeability, cleanliness, full, social, playfulness; 
 
     public static void InitializeStat()
     {
-        health = 0f;
-        intellect = 0f;
+        maxHealth = 100f;
+        health = maxHealth;
+        intellect = 0f; 
         likeability = 0f;
-        cleanliness = 0f;
-        full = 0f;
+        playfulness = 0f;
+        cleanliness = 100f;
+        full = 100f;
+        social = 50f;
     }
 
     public static void IncreaseStat(string stat, int num)
@@ -24,6 +27,7 @@ public static class EggMonStat
             case "likeability": likeability += num; break;
             case "cleanliness": cleanliness += num; break;
             case "full": full += num; break;
+            case "social": social += num; break;
             default: Debug.Log($"{stat}이라는 스탯은 존재하지 않습니다."); break;
 
         }
@@ -37,6 +41,7 @@ public static class EggMonStat
             case "likeability": likeability -= num; break;
             case "cleanliness": cleanliness -= num; break;
             case "full": full -= num; break;
+            case "social": social -= num; break;
             default: Debug.Log($"{stat}이라는 스탯은 존재하지 않습니다."); break;
 
         }

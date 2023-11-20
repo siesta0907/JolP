@@ -19,6 +19,8 @@ public class Tamagotchi : MonoBehaviour
     public float social = 100f; // 사회성
     public float money = 0f; // 돈
 
+    
+
     public Text hungerText;
     public Text trainingText;
     public Text playfulnessText;
@@ -36,6 +38,8 @@ public class Tamagotchi : MonoBehaviour
 
     void Start()
     {
+        EggMonStat.InitializeStat();
+
         state = State.EGG;
         timer = 0;
         if(evolutionStages != null)
