@@ -8,15 +8,9 @@ public class Tamagotchi : MonoBehaviour
     public enum State { EGG, CHILD, TEEN, ADULT, DEAD }
     public State state;
     public float timer;
-    public float timeToLive = 259200.0f; // 72�ð� * 60�� * 60��
-    public GameObject[] evolutionStages; // ��ȭ ���º� ���� ������Ʈ �迭
+    public float timeToLive = 259200.0f; 
+    public GameObject[] evolutionStages;
 
-    public float hunger = 100f; // float�� ����
-    public float training = 100f; // float�� ����
-    public float playfulness = 100f; // float�� ����
-    public float cleanliness = 100f; // float�� ����
-    public int careScore = 0; // �ɾ� ����
-    public float social = 100f; // 사회성
     public float money = 0f; // 돈
 
     
@@ -46,9 +40,9 @@ public class Tamagotchi : MonoBehaviour
         {
             foreach (GameObject stage in evolutionStages)
             {
-                stage.SetActive(false); // ��� ��ȭ ���� ������Ʈ ��Ȱ��ȭ
+                stage.SetActive(false);
             }
-            evolutionStages[0].SetActive(true); // �ʱ� ���� (��) Ȱ��ȭ
+            evolutionStages[0].SetActive(true); 
         }
      
     }
@@ -57,7 +51,7 @@ public class Tamagotchi : MonoBehaviour
     {
         if (state != State.DEAD)
         {
-            timer += Time.deltaTime * 2; // ���⼭ 2�� �ð��� ������ �帣�� �ϴ� ���, ��� ���� ����
+            timer += Time.deltaTime * 2; 
 
             if (timer >= timeToLive)
             {
@@ -71,11 +65,11 @@ public class Tamagotchi : MonoBehaviour
 
     void UpdateUI()
     {
-        hungerText.text = "먹이기 : " + (int)Mathf.Clamp(hunger, 0, 100);
-        trainingText.text = "훈련하기 : " + (int)Mathf.Clamp(training, 0, 100);
-        playfulnessText.text = "놀아주기 : " + (int)Mathf.Clamp(playfulness, 0, 100);
-        cleanlinessText.text = "씻기기 : " + (int)Mathf.Clamp(cleanliness, 0, 100);
-        socialText.text = "사회성 : " + (int)Mathf.Clamp(social, 0, 100);
+        hungerText.text = "먹이기 : " + (int)Mathf.Clamp(EggMonStat.full, 0, 100);
+        trainingText.text = "훈련하기 : " + (int)Mathf.Clamp(EggMonStat.intellect, 0, 100);
+        playfulnessText.text = "놀아주기 : " + (int)Mathf.Clamp(EggMonStat.playfulness, 0, 100);
+        cleanlinessText.text = "씻기기 : " + (int)Mathf.Clamp(EggMonStat.cleanliness, 0, 100);
+        socialText.text = "사회성 : " + (int)Mathf.Clamp(EggMonStat.social, 0, 100);
         moneyText.text = "돈 : " + money;
 
 
@@ -89,43 +83,38 @@ public class Tamagotchi : MonoBehaviour
 
     public void Feed()
     {
-        hunger += 10f; // float ������ �߰�
-        careScore += 1;
-        Debug.Log("배고픔 : " + hunger);
+        EggMonStat.IncreaseStat("full", 10f);
+        EggMonStat.IncreaseStat("likeability", 1f);
     }
 
     public void Train()
     {
-        training += 10f;
-        careScore += 1;
-        Debug.Log("훈련도 : " + training);
+        EggMonStat.IncreaseStat("intellect", 10f);
+        EggMonStat.IncreaseStat("likeability", 1f);
     }
 
     public void Play()
     {
-        playfulness += 10f;
-        careScore += 1;
-        Debug.Log("즐거움 : " + playfulness);
+        EggMonStat.IncreaseStat("playfulness", 10f);
+        EggMonStat.IncreaseStat("likeability", 3f);
     }
 
     public void Clean()
     {
-        cleanliness += 10f;
-        careScore += 1;
-        Debug.Log("청결도 : " + cleanliness);
+        EggMonStat.IncreaseStat("cleanliness", 10f);
+        EggMonStat.IncreaseStat("likeability", 1f);
     }
 
     public void MeetFriends()
     {
-        social += 10f; // 사회성을 증가
-        cleanliness -= 10f; // 친구를 만나면 청결도가 감소
-        Debug.Log("사회성 : " + social);
+        EggMonStat.IncreaseStat("social", 10f);
+        EggMonStat.DecreaseStat("cleanliness", 1f);
     }
     public void Work()
     {
         money += 50f; // 일정 금액을 추가
-        hunger -= 10f; // 알바를 하면 배고픔이 증가
-        if (hunger <= 0)
+        EggMonStat.DecreaseStat("full", 40f);
+        if (EggMonStat.full <= 0)
         {
             DecreaseHP(); // 배고픔이 0 이하이면 HP 감소
         }
@@ -137,13 +126,12 @@ public class Tamagotchi : MonoBehaviour
     {
         if (state != State.EGG)
         {
-            hunger -= Time.deltaTime;
-            training -= Time.deltaTime;
-            playfulness -= Time.deltaTime;
-            cleanliness -= Time.deltaTime;
+            EggMonStat.DecreaseStat("full", 10f);
+            EggMonStat.DecreaseStat("cleanliness", 10f);
+            EggMonStat.DecreaseStat("playfulness", 10f);
 
             // 새로운 HP 감소 조건
-            if (hunger <= 0 || cleanliness <= 0)
+            if (EggMonStat.full <= 0 || EggMonStat.cleanliness <= 0)
             {
                 DecreaseHP(); // HP 감소 함수 호출
             }

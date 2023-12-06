@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public static class EggMonStat 
 {
     public static float health, maxHealth, intellect, likeability, cleanliness, full, social, playfulness; 
@@ -15,10 +15,10 @@ public static class EggMonStat
         playfulness = 0f;
         cleanliness = 100f;
         full = 100f;
-        social = 50f;
+        social = 0f;
     }
 
-    public static void IncreaseStat(string stat, int num)
+    public static void IncreaseStat(string stat, float num)
     {
         switch (stat)
         {
@@ -28,11 +28,12 @@ public static class EggMonStat
             case "cleanliness": cleanliness += num; break;
             case "full": full += num; break;
             case "social": social += num; break;
+            case "playfulness": playfulness += num; break;
             default: Debug.Log($"{stat}이라는 스탯은 존재하지 않습니다."); break;
 
         }
     }
-    public static void DecreaseStat(string stat, int num)
+    public static void DecreaseStat(string stat, float num)
     {
         switch (stat)
         {
@@ -42,6 +43,7 @@ public static class EggMonStat
             case "cleanliness": cleanliness -= num; break;
             case "full": full -= num; break;
             case "social": social -= num; break;
+            case "playfulness": playfulness -= num; break;
             default: Debug.Log($"{stat}이라는 스탯은 존재하지 않습니다."); break;
 
         }
