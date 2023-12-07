@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.SceneManagement;
 
 public class Tamagotchi : MonoBehaviour
 {
@@ -107,8 +108,17 @@ public class Tamagotchi : MonoBehaviour
 
     public void MeetFriends()
     {
+<<<<<<< Updated upstream
         EggMonStat.IncreaseStat("social", 10f);
         EggMonStat.DecreaseStat("cleanliness", 1f);
+=======
+        social += 10f; // 사회성을 증가
+        cleanliness -= 10f; // 친구를 만나면 청결도가 감소
+        Debug.Log("사회성 : " + social);
+
+        // online playing scene
+        SceneManager.LoadScene("Online_play");
+>>>>>>> Stashed changes
     }
     public void Work()
     {
