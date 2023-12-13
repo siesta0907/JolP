@@ -6,16 +6,17 @@ using UnityEngine.UI;
 
 public class FrameManager : MonoBehaviour
 {
-
-    public Canvas Shop, Stat, Inventory;
-    public Button HomeBtn, ShopBtn, StatBtn, BagBtn;
+    public static FrameManager instance;
+    public  Canvas Shop, Stat, Inventory, QuestionConfirm;
+    public  Button HomeBtn, ShopBtn, StatBtn, BagBtn;
 
     private void Start()
     {
+        instance = this;
         Shop.gameObject.SetActive(false);
         Stat.gameObject.SetActive(false);
         Inventory.gameObject.SetActive(false);
-
+        QuestionConfirm.gameObject.SetActive(false);
 
         if (HomeBtn != null)
         {
@@ -46,7 +47,7 @@ public class FrameManager : MonoBehaviour
     }
 
 
-    public void GoHome()
+    public  void GoHome()
     {
         SceneManager.LoadScene("Start");
     }
@@ -55,7 +56,7 @@ public class FrameManager : MonoBehaviour
     {
         Shop.gameObject.SetActive(true);
     }
-    public void CloseShop()
+    public  void CloseShop()
     {
         Shop.gameObject.SetActive(false);
     }
@@ -78,5 +79,14 @@ public class FrameManager : MonoBehaviour
     public void CloseInventory()
     {
         Inventory.gameObject.SetActive(false);
+    }
+
+    public void OpenQuestionConfirm()
+    {
+        QuestionConfirm.gameObject.SetActive(true);
+    }
+    public void CloseQuestionConfirm()
+    {
+        QuestionConfirm.gameObject.SetActive(false);
     }
 }

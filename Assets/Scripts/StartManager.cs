@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class StartManager : MonoBehaviour
 {
-    public Button StartBtn, AlbumBtn, ExitBtn;
+    public Button StartBtn, AlbumBtn, ExitBtn, GalaryExit;
     public Canvas Galary;
 
     void Start()
@@ -41,6 +41,10 @@ public class StartManager : MonoBehaviour
     private void OpenAlbum()
     {
         Galary.gameObject.SetActive(true);
+    }
+    private void CloseAlbum()
+    {
+        Galary.gameObject.SetActive(false);
     }
     private void ExitGame()
     {

@@ -13,8 +13,8 @@ public static class EggMonStat
         intellect = 0f; 
         likeability = 0f;
         playfulness = 0f;
-        cleanliness = 100f;
-        full = 100f;
+        cleanliness = 50f;
+        full = 50f;
         social = 0f;
     }
 
