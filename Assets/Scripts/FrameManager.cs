@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class FrameManager : MonoBehaviour
 {
     public static FrameManager instance;
-    public  Canvas Shop, Stat, Inventory, QuestionConfirm;
-    public  Button HomeBtn, ShopBtn, StatBtn, BagBtn;
+    public  Canvas Shop, Stat, Inventory, QuestionConfirm, TrainPopup, OnlinePlay, Play, Work;
+    public  Button HomeBtn, ShopBtn, StatBtn, BagBtn, TrainpopBtn, OnlinePlayBtn, PlayBtn, WorkBtn;
 
     private void Start()
     {
@@ -17,6 +17,10 @@ public class FrameManager : MonoBehaviour
         Stat.gameObject.SetActive(false);
         Inventory.gameObject.SetActive(false);
         QuestionConfirm.gameObject.SetActive(false);
+        TrainPopup.gameObject.SetActive(false);
+        OnlinePlay.gameObject.SetActive(false);
+        Play.gameObject.SetActive(false);
+        Work.gameObject.SetActive(false);
 
         if (HomeBtn != null)
         {
@@ -34,6 +38,23 @@ public class FrameManager : MonoBehaviour
         {
             BagBtn.onClick.AddListener(OpenInventory);
         }
+        if (TrainpopBtn != null)
+        {
+            TrainpopBtn.onClick.AddListener(OpenTrainPopup);
+        }
+        if (OnlinePlayBtn != null)
+        {
+            OnlinePlayBtn.onClick.AddListener(OpenOnlinePlay);
+        }
+        if (PlayBtn != null)
+        {
+            PlayBtn.onClick.AddListener(OpenPlay);
+        }
+        if (WorkBtn != null)
+        {
+            WorkBtn.onClick.AddListener(OpenWork);
+        }
+
     }
 
     private void Update()
@@ -43,6 +64,10 @@ public class FrameManager : MonoBehaviour
             Shop.gameObject.SetActive(false);
             Stat.gameObject.SetActive(false);
             Inventory.gameObject.SetActive(false);
+            TrainPopup.gameObject.SetActive(false);
+            OnlinePlay.gameObject.SetActive(false);
+            Play.gameObject.SetActive(false);
+            Work.gameObject.SetActive(false);
         }
     }
 
@@ -88,5 +113,47 @@ public class FrameManager : MonoBehaviour
     public void CloseQuestionConfirm()
     {
         QuestionConfirm.gameObject.SetActive(false);
+    }
+
+
+    public void OpenTrainPopup()
+    {
+        TrainPopup.gameObject.SetActive(true);
+    }
+
+    public void CloseTrainPopup()
+    {
+        Debug.Log("»∆∑√√¢ exit");
+        TrainPopup.gameObject.SetActive(false);
+    }
+
+    public void OpenOnlinePlay()
+    {
+        OnlinePlay.gameObject.SetActive(true);
+    }
+
+    public void CloseOnlinePlay()
+    {
+        OnlinePlay.gameObject.SetActive(false);
+    }
+
+    public void OpenPlay()
+    {
+        Play.gameObject.SetActive(true);
+    }
+
+    public void ClosePlay()
+    {
+        Play.gameObject.SetActive(false);
+    }
+
+    public void OpenWork()
+    {
+        Work.gameObject.SetActive(true);
+    }
+
+    public void CloseWork()
+    {
+        Work.gameObject.SetActive(false);
     }
 }
