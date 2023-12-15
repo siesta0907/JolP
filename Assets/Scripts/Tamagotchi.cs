@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SocialPlatforms;
+using Unity.VisualScripting;
 
 public class Tamagotchi : MonoBehaviour
 {
@@ -12,8 +13,11 @@ public class Tamagotchi : MonoBehaviour
     public GameObject[] evolutionStages;
 
     public float money = 0f; // 돈
+    public Button sleepButton; // 잠자기 버튼
 
-    
+    public int dayCounter = 1; // 현재 날짜 카운터
+    public Text dayCounterText; // 날짜를 표시할 UI 텍스트 (TextMeshProUGUI로 변경 가능)
+
 
     public Text hungerText;
     public Text trainingText;
@@ -44,19 +48,24 @@ public class Tamagotchi : MonoBehaviour
             }
             evolutionStages[0].SetActive(true); 
         }
-     
+        // 초기 날짜 표시
+        UpdateDayCounterUI();
+        // 잠자기 버튼 클릭 이벤트에 Sleep 메서드 연결
+        sleepButton.onClick.AddListener(Sleep);
+
+    }
+
+    // 날짜 카운터 UI 업데이트
+    void UpdateDayCounterUI()
+    {
+        dayCounterText.text = "DAY " + dayCounter;
     }
 
     void Update()
     {
         if (state != State.DEAD)
         {
-            timer += Time.deltaTime * 2; 
-
-            if (timer >= timeToLive)
-            {
-                Evolve();
-            }
+            // 타이머 증가 로직 제거
 
             DecreaseStatsOverTime();
             UpdateUI();
@@ -81,6 +90,21 @@ public class Tamagotchi : MonoBehaviour
         timerText.text = string.Format("{0:0}h {1:0}m {2:0}s", remainingHours, remainingMinutes, remainingSeconds);
     }
 
+    // 잠자기 기능을 수행하는 메서드
+    public void Sleep()
+    {
+        // 날짜 카운터 증가
+        dayCounter++;
+
+        // 체력을 최대로 회복
+        hp = heartSprites.Length - 1;
+        UpdateHeartSprite();
+
+        // 날짜 카운터 UI 업데이트
+        UpdateDayCounterUI();
+
+        Debug.Log("잠자기 버튼이 눌렸습니다. 다음 날로 넘어갑니다: DAY " + dayCounter);
+    }
     public void Feed()
     {
         EggMonStat.IncreaseStat("full", 10f);
