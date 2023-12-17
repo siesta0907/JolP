@@ -98,15 +98,17 @@ public class Tamagotchi : MonoBehaviour
     {
         // 날짜 카운터 증가
         dayCounter++;
+        EggMonStat.health = EggMonStat.maxHealth;
 
         // 체력을 최대로 회복
-        hp = heartSprites.Length - 1;
+        
         UpdateHeartSprite();
 
         // 날짜 카운터 UI 업데이트
         UpdateDayCounterUI();
 
         Debug.Log("잠자기 버튼이 눌렸습니다. 다음 날로 넘어갑니다: DAY " + dayCounter);
+        Debug.Log("잠을 자서 충분한 휴식을 얻은 다마고치는 체력이 최대가 되었습니다!");
     }
     public void Feed()
     {
@@ -226,16 +228,19 @@ public class Tamagotchi : MonoBehaviour
         if (state == State.EGG && dayCounter > daysForEvolution)
         {
             Evolve();
+            Debug.Log("EGG ENVOLVE, CHILD로 진화하였습니다!");
         }
         // CHILD에서 TEEN으로 진화하는 경우
         else if (state == State.CHILD && dayCounter > daysForEvolution * 2) // 예를 들어 7일째에 CHILD에서 TEEN으로 진화
         {
             Evolve();
+            Debug.Log("CHILD ENVOLVE, TEEN 으로 진화하였습니다!");
         }
         // TEEN에서 ADULT로 진화하는 경우
         else if (state == State.TEEN && dayCounter > daysForEvolution * 3) // 예를 들어 10일째에 TEEN에서 ADULT로 진화
         {
             Evolve();
+            Debug.Log("TEEN ENVOLVE, ADULT 로 진화하였습니다!");
         }
         // 추가 상태에 대한 진화 조건
         // ...
