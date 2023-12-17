@@ -10,6 +10,10 @@ public class FrameManager : MonoBehaviour
     public  Canvas Shop, Stat, Inventory, QuestionConfirm, TrainPopup, OnlinePlay, Play, Work;
     public  Button HomeBtn, ShopBtn, StatBtn, BagBtn, TrainpopBtn, OnlinePlayBtn, PlayBtn, WorkBtn;
 
+    public Image BackgroundImage; // 배경 이미지
+    private bool isModalOpen = false; // 모달 창이 열려 있는지 여부를 나타내는 플래그
+
+
     private void Start()
     {
         instance = this;
@@ -55,6 +59,12 @@ public class FrameManager : MonoBehaviour
             WorkBtn.onClick.AddListener(OpenWork);
         }
 
+        // 1217 추가 팝업 열렸을 시 배경 어둡게
+        if (BackgroundImage != null)
+        {
+            BackgroundImage.gameObject.SetActive(false);
+        }
+
     }
 
     private void Update()
@@ -71,8 +81,8 @@ public class FrameManager : MonoBehaviour
         }
     }
 
-
-    public  void GoHome()
+    
+    /*public  void GoHome()
     {
         SceneManager.LoadScene("Start");
     }
@@ -155,5 +165,127 @@ public class FrameManager : MonoBehaviour
     public void CloseWork()
     {
         Work.gameObject.SetActive(false);
+    }*/
+
+    // 모달 창 열기 함수 수정
+    private void OpenModal(Canvas modalCanvas)
+    {
+        if (!isModalOpen)
+        {
+            // 배경 이미지를 어둡게 만들고 활성화
+            if (BackgroundImage != null)
+            {
+                BackgroundImage.gameObject.SetActive(true);
+                BackgroundImage.color = new Color(0, 0, 0, 0.5f); // 어두운 색상
+            }
+
+            // 모달 창 활성화
+            modalCanvas.gameObject.SetActive(true);
+
+            isModalOpen = true;
+        }
+    }
+
+    // 모달 창 닫기 함수 수정
+    private void CloseModal(Canvas modalCanvas)
+    {
+        if (isModalOpen)
+        {
+            // 배경 이미지 비활성화
+            if (BackgroundImage != null)
+            {
+                BackgroundImage.gameObject.SetActive(false);
+                BackgroundImage.color = new Color(0, 0, 0, 0); // 투명한 색상
+            }
+
+            // 모달 창 비활성화
+            modalCanvas.gameObject.SetActive(false);
+
+            isModalOpen = false;
+        }
+    }
+    public void GoHome()
+    {
+        SceneManager.LoadScene("Start");
+    }
+
+    public void OpenShop()
+    {
+        OpenModal(Shop);
+    }
+
+    public void CloseShop()
+    {
+        CloseModal(Shop);
+    }
+
+    public void OpenStat()
+    {
+        OpenModal(Stat);
+    }
+
+    public void CloseStat()
+    {
+        CloseModal(Stat);
+    }
+
+    public void OpenInventory()
+    {
+        OpenModal(Inventory);
+    }
+
+    public void CloseInventory()
+    {
+        CloseModal(Inventory);
+    }
+
+    public void OpenQuestionConfirm()
+    {
+        OpenModal(QuestionConfirm);
+    }
+
+    public void CloseQuestionConfirm()
+    {
+        CloseModal(QuestionConfirm);
+    }
+
+    public void OpenTrainPopup()
+    {
+        OpenModal(TrainPopup);
+    }
+
+    public void CloseTrainPopup()
+    {
+        CloseModal(TrainPopup);
+    }
+
+    public void OpenOnlinePlay()
+    {
+        OpenModal(OnlinePlay);
+    }
+
+    public void CloseOnlinePlay()
+    {
+        CloseModal(OnlinePlay);
+    }
+
+    public void OpenPlay()
+    {
+        OpenModal(Play);
+    }
+
+    public void ClosePlay()
+    {
+        CloseModal(Play);
+    }
+
+    public void OpenWork()
+    {
+        OpenModal(Work);
+    }
+
+    public void CloseWork()
+    {
+        CloseModal(Work);
     }
 }
