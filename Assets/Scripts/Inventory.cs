@@ -33,8 +33,7 @@ public class Inventory : MonoBehaviour
 
     public void ClearInventory()
     {
-        if (items.Count > 0)
-        {
+ 
             int i = 0;
             foreach (var itemimage in itemImages)
             {
@@ -45,7 +44,7 @@ public class Inventory : MonoBehaviour
                 inventoryItems[i].GetComponent<inventoryItemClick>().item = null;
                 i += 1;
             }
-        }
+        
     }
 
     public void InventoryUpdate()
