@@ -104,6 +104,9 @@ public class Tamagotchi : MonoBehaviour
         
         UpdateHeartSprite();
 
+        // 코인 증가
+        MoneyManager.money += 50;
+
         // 날짜 카운터 UI 업데이트
         UpdateDayCounterUI();
 
