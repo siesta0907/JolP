@@ -9,7 +9,7 @@ public class Tamagotchi : MonoBehaviour
     public enum State { EGG, CHILD, TEEN, ADULT, DEAD }
     public State state;
     public float timer;
-    public float timeToLive = 259200.0f; 
+    public float timeToLive = 259200.0f;
     public GameObject[] evolutionStages;
 
     public float money = 0f; // 돈
@@ -40,13 +40,13 @@ public class Tamagotchi : MonoBehaviour
 
         state = State.EGG;
         timer = 0;
-        if(evolutionStages != null)
+        if (evolutionStages != null)
         {
             foreach (GameObject stage in evolutionStages)
             {
                 stage.SetActive(false);
             }
-            evolutionStages[0].SetActive(true); 
+            evolutionStages[0].SetActive(true);
         }
         // 초기 날짜 표시
         UpdateDayCounterUI();
@@ -58,17 +58,20 @@ public class Tamagotchi : MonoBehaviour
     // 날짜 카운터 UI 업데이트
     void UpdateDayCounterUI()
     {
-        dayCounterText.text = "DAY " + dayCounter;
+        dayCounterText.text = "DAY\n" + dayCounter;
     }
+
+    
 
     void Update()
     {
         if (state != State.DEAD)
         {
-            // 타이머 증가 로직 제거
-
             DecreaseStatsOverTime();
             UpdateUI();
+
+            // 진화 조건 확인 및 처리
+            CheckForEvolution();
         }
     }
 
@@ -215,4 +218,29 @@ public class Tamagotchi : MonoBehaviour
         }
         evolutionStages[index].SetActive(true);
     }
+
+    void CheckForEvolution()
+    {
+        // 각 상태별 진화에 필요한 최소 일수 + 1일
+        int daysForEvolution = 3;
+
+        // 현재 상태가 EGG이고, dayCounter가 진화에 필요한 최소 일수 + 1일을 초과했는지 확인
+        if (state == State.EGG && dayCounter > daysForEvolution)
+        {
+            Evolve();
+        }
+        // CHILD에서 TEEN으로 진화하는 경우
+        else if (state == State.CHILD && dayCounter > daysForEvolution * 2) // 예를 들어 7일째에 CHILD에서 TEEN으로 진화
+        {
+            Evolve();
+        }
+        // TEEN에서 ADULT로 진화하는 경우
+        else if (state == State.TEEN && dayCounter > daysForEvolution * 3) // 예를 들어 10일째에 TEEN에서 ADULT로 진화
+        {
+            Evolve();
+        }
+        // 추가 상태에 대한 진화 조건
+        // ...
+    }
+
 }
