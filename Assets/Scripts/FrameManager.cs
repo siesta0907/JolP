@@ -12,6 +12,7 @@ public class FrameManager : MonoBehaviour
 
     public Image BackgroundImage; // 배경 이미지
     private bool isModalOpen = false; // 모달 창이 열려 있는지 여부를 나타내는 플래그
+    private Canvas currentModalCanvas; // 현재 열려 있는 모달 창을 추적하기 위한 변수
 
 
     private void Awake()
@@ -125,15 +126,23 @@ public class FrameManager : MonoBehaviour
         CloseModal(inventory);
         Inventory.instance.OpenWithItemType = "All";
     }
-
     public void OpenQuestionConfirm()
+    {
+        QuestionConfirm.gameObject.SetActive(true);
+    }
+    public void CloseQuestionConfirm()
+    {
+        QuestionConfirm.gameObject.SetActive(false);
+    }
+
+    /*public void OpenQuestionConfirm()
     {
         OpenModal(QuestionConfirm);
     }
     public void CloseQuestionConfirm()
     {
         CloseModal(QuestionConfirm);
-    }
+    }*/
 
 
     public void OpenTrainPopup()
@@ -202,10 +211,9 @@ public class FrameManager : MonoBehaviour
         if (!isModalOpen)
         {
             // 배경 이미지를 어둡게 만들고 활성화
-            if (BackgroundImage != null)
+            if (BackgroundImage != null && !BackgroundImage.gameObject.activeSelf)
             {
                 BackgroundImage.gameObject.SetActive(true);
-                BackgroundImage.color = new Color(0, 0, 0, 0.5f); // 어두운 색상
             }
 
             // 모달 창 활성화
@@ -220,11 +228,10 @@ public class FrameManager : MonoBehaviour
     {
         if (isModalOpen)
         {
-            // 배경 이미지 비활성화
-            if (BackgroundImage != null)
+            // 배경 이미지가 비활성화된 경우에만 활성화하도록 수정
+            if (BackgroundImage != null && BackgroundImage.gameObject.activeSelf)
             {
                 BackgroundImage.gameObject.SetActive(false);
-                BackgroundImage.color = new Color(0, 0, 0, 0); // 투명한 색상
             }
 
             // 모달 창 비활성화
@@ -233,4 +240,5 @@ public class FrameManager : MonoBehaviour
             isModalOpen = false;
         }
     }
+
 }
