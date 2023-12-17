@@ -8,9 +8,10 @@ public class Item : MonoBehaviour
     public int price;
     public SerializableDictionary<string, int> itemEffect;
     public string itemName;
-    public Text itemPriceText;
-    public Button itemBtn;
+    private Text itemPriceText;
+    private Button itemBtn;
     public Sprite itemImage;
+    public string itemType;
 
     private void Start()
     {
@@ -33,6 +34,10 @@ public class Item : MonoBehaviour
         if (itemName == "Steak")
         {
             itemEffect.Add("full", 100);
+        }
+        if (itemName == "Bone")
+        {
+            itemEffect.Add("playfulness", 30);
         }
     }
     private void PurchaseItem()

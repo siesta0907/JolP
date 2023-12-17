@@ -7,19 +7,24 @@ using UnityEngine.UI;
 public class FrameManager : MonoBehaviour
 {
     public static FrameManager instance;
-    public  Canvas Shop, Stat, Inventory, QuestionConfirm, TrainPopup, OnlinePlay, Play, Work;
-    public  Button HomeBtn, ShopBtn, StatBtn, BagBtn, TrainpopBtn, OnlinePlayBtn, PlayBtn, WorkBtn;
+    public  Canvas Shop, Stat, inventory, QuestionConfirm, TrainPopup, OnlinePlay, Play, Work;
+    public  Button HomeBtn, ShopBtn, StatBtn, BagBtn, TrainpopBtn, OnlinePlayBtn, PlayBtn, WorkBtn, FoodBtn;
 
     public Image BackgroundImage; // 배경 이미지
     private bool isModalOpen = false; // 모달 창이 열려 있는지 여부를 나타내는 플래그
 
 
+    private void Awake()
+    {
+
+        inventory.gameObject.SetActive(true);
+    }
     private void Start()
     {
         instance = this;
         Shop.gameObject.SetActive(false);
         Stat.gameObject.SetActive(false);
-        Inventory.gameObject.SetActive(false);
+        inventory.gameObject.SetActive(false);
         QuestionConfirm.gameObject.SetActive(false);
         TrainPopup.gameObject.SetActive(false);
         OnlinePlay.gameObject.SetActive(false);
@@ -58,13 +63,15 @@ public class FrameManager : MonoBehaviour
         {
             WorkBtn.onClick.AddListener(OpenWork);
         }
+        if(FoodBtn != null)
+        {
+            FoodBtn.onClick.AddListener(OpenFood);
+        }
 
-        // 1217 추가 팝업 열렸을 시 배경 어둡게
         if (BackgroundImage != null)
         {
             BackgroundImage.gameObject.SetActive(false);
         }
-
     }
 
     private void Update()
@@ -73,7 +80,7 @@ public class FrameManager : MonoBehaviour
         {
             Shop.gameObject.SetActive(false);
             Stat.gameObject.SetActive(false);
-            Inventory.gameObject.SetActive(false);
+            inventory.gameObject.SetActive(false);
             TrainPopup.gameObject.SetActive(false);
             OnlinePlay.gameObject.SetActive(false);
             Play.gameObject.SetActive(false);
@@ -81,93 +88,115 @@ public class FrameManager : MonoBehaviour
         }
     }
 
-    
-    /*public  void GoHome()
+
+    public  void GoHome()
     {
         SceneManager.LoadScene("Start");
     }
 
     public void OpenShop()
     {
-        Shop.gameObject.SetActive(true);
+        OpenModal(Shop);
     }
     public  void CloseShop()
     {
-        Shop.gameObject.SetActive(false);
+        CloseModal(Shop);
     }
 
     public void OpenStat()
     {
-        Stat.gameObject.SetActive(true);
+        OpenModal(Stat);
     }
 
     public void CloseStat()
     {
-        Stat.gameObject.SetActive(false);
+        CloseModal(Stat);
     }
 
     public void OpenInventory()
     {
-        Inventory.gameObject.SetActive(true);
+        Inventory.instance.ClearInventory();
+        Inventory.instance.InventoryUpdate();
+        OpenModal(inventory);
     }
 
     public void CloseInventory()
     {
-        Inventory.gameObject.SetActive(false);
+        CloseModal(inventory);
+        Inventory.instance.OpenWithItemType = "All";
     }
 
     public void OpenQuestionConfirm()
     {
-        QuestionConfirm.gameObject.SetActive(true);
+        OpenModal(QuestionConfirm);
     }
     public void CloseQuestionConfirm()
     {
-        QuestionConfirm.gameObject.SetActive(false);
+        CloseModal(QuestionConfirm);
     }
 
 
     public void OpenTrainPopup()
     {
-        TrainPopup.gameObject.SetActive(true);
+        OpenModal(TrainPopup);
     }
 
     public void CloseTrainPopup()
     {
-        Debug.Log("훈련창 exit");
-        TrainPopup.gameObject.SetActive(false);
+        CloseModal(TrainPopup);
     }
 
     public void OpenOnlinePlay()
     {
-        OnlinePlay.gameObject.SetActive(true);
+        OpenModal(OnlinePlay);
     }
 
     public void CloseOnlinePlay()
     {
-        OnlinePlay.gameObject.SetActive(false);
+        CloseModal(OnlinePlay);
     }
 
     public void OpenPlay()
     {
-        Play.gameObject.SetActive(true);
+        Inventory.instance.OpenWithItemType = "Toy";
+        Inventory.instance.ClearInventory();
+        Inventory.instance.InventoryUpdate();
+
+        OpenModal(inventory);
     }
 
     public void ClosePlay()
     {
-        Play.gameObject.SetActive(false);
+        CloseModal(inventory);
+        Inventory.instance.OpenWithItemType = "All";
+    }
+
+    public void OpenFood()
+    {
+        Inventory.instance.OpenWithItemType = "Food";
+        Inventory.instance.ClearInventory();
+        Inventory.instance.InventoryUpdate();
+        OpenModal(inventory);
+        Debug.Log("인벤토리 음식만 활성화됨!");
+    }
+
+    public void CloseFood()
+    {
+        CloseModal(inventory);
+        Inventory.instance.OpenWithItemType = "All";
     }
 
     public void OpenWork()
     {
-        Work.gameObject.SetActive(true);
+        OpenModal(Work);
     }
 
     public void CloseWork()
     {
-        Work.gameObject.SetActive(false);
-    }*/
+        CloseModal(Work);
+    }
 
-    // 모달 창 열기 함수 수정
+
     private void OpenModal(Canvas modalCanvas)
     {
         if (!isModalOpen)
@@ -203,89 +232,5 @@ public class FrameManager : MonoBehaviour
 
             isModalOpen = false;
         }
-    }
-    public void GoHome()
-    {
-        SceneManager.LoadScene("Start");
-    }
-
-    public void OpenShop()
-    {
-        OpenModal(Shop);
-    }
-
-    public void CloseShop()
-    {
-        CloseModal(Shop);
-    }
-
-    public void OpenStat()
-    {
-        OpenModal(Stat);
-    }
-
-    public void CloseStat()
-    {
-        CloseModal(Stat);
-    }
-
-    public void OpenInventory()
-    {
-        OpenModal(Inventory);
-    }
-
-    public void CloseInventory()
-    {
-        CloseModal(Inventory);
-    }
-
-    public void OpenQuestionConfirm()
-    {
-        OpenModal(QuestionConfirm);
-    }
-
-    public void CloseQuestionConfirm()
-    {
-        CloseModal(QuestionConfirm);
-    }
-
-    public void OpenTrainPopup()
-    {
-        OpenModal(TrainPopup);
-    }
-
-    public void CloseTrainPopup()
-    {
-        CloseModal(TrainPopup);
-    }
-
-    public void OpenOnlinePlay()
-    {
-        OpenModal(OnlinePlay);
-    }
-
-    public void CloseOnlinePlay()
-    {
-        CloseModal(OnlinePlay);
-    }
-
-    public void OpenPlay()
-    {
-        OpenModal(Play);
-    }
-
-    public void ClosePlay()
-    {
-        CloseModal(Play);
-    }
-
-    public void OpenWork()
-    {
-        OpenModal(Work);
-    }
-
-    public void CloseWork()
-    {
-        CloseModal(Work);
     }
 }

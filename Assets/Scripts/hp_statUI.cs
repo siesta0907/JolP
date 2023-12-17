@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class hp_statUI : MonoBehaviour
 {
     public Slider hpSlider;
+    public Image hpBarImage;
 
     void Start()
     {
@@ -25,11 +26,8 @@ public class hp_statUI : MonoBehaviour
 
         // 디버그 로그 추가
         Debug.Log("Health: " + EggMonStat.health + " / Max Health: " + EggMonStat.maxHealth + " - Ratio: " + healthRatio);
+
+        hpBarImage.rectTransform.sizeDelta = new Vector2(hpSlider.value * hpBarImage.rectTransform.sizeDelta.x, hpBarImage.rectTransform.sizeDelta.y);
     }
 
-    /*private void UpdateUI()
-    {
-        // EggMonStat 클래스의 health 값을 maxHealth로 나누어 슬라이더의 값을 업데이트합니다.
-        hpSlider.value = EggMonStat.health / EggMonStat.maxHealth;
-    }*/
 }

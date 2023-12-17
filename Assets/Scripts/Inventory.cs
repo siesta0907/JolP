@@ -13,11 +13,12 @@ public class Inventory : MonoBehaviour
     public GameObject[] inventoryItems;
     public GameObject[] itemImages;
     public GameObject[] itemNum;
-
+    public string OpenWithItemType;
     
 
     public void Start()
     {
+        OpenWithItemType = "All";
         instance = this;
         items = new SerializableDictionary<Item, int>();
 
@@ -30,24 +31,44 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void ClearInventory()
+    {
+        if (items.Count > 0)
+        {
+            int i = 0;
+            foreach (var itemimage in itemImages)
+            {
+                itemimage.SetActive(true);
+                itemimage.GetComponent<Image>().sprite = null;
+                itemimage.SetActive(false);
+                itemNum[i].GetComponent<Text>().text = "";
+                inventoryItems[i].GetComponent<inventoryItemClick>().item = null;
+                i += 1;
+            }
+        }
+    }
+
+    public void InventoryUpdate()
     {
         if (items.Count > 0)
         {
             int i = 0;
             foreach (var item in items)
             {
-                if(itemImages.Length > i)
+                if (OpenWithItemType == "All" || OpenWithItemType == item.Key.itemType)
                 {
-                    itemImages[i].SetActive(true);
-                    itemImages[i].GetComponent<Image>().sprite = item.Key.itemImage;
-                    itemNum[i].GetComponent<Text>().text = item.Value.ToString();
-                    inventoryItems[i].GetComponent<inventoryItemClick>().item = item.Key;
-                    i += 1;
+                    if (itemImages.Length > i)
+                    {
+                        itemImages[i].SetActive(true);
+                        itemImages[i].GetComponent<Image>().sprite = item.Key.itemImage;
+                        itemNum[i].GetComponent<Text>().text = item.Value.ToString();
+                        inventoryItems[i].GetComponent<inventoryItemClick>().item = item.Key;
+                        i += 1;
+                    }
                 }
+                
             }
         }
-       
     }
 
     public void GetItem(Item item)
@@ -90,6 +111,12 @@ public void UseItem(Item item)
                 Debug.Log(string.Format($"{stat.Key} 스탯이 {stat.Value}만큼 증가하였습니다."));
             }
             items[item] -= 1;
+            if(items[item] <= 0)
+            {
+                items.Remove(item);
+            }
+            ClearInventory();
+            InventoryUpdate();
         }
         QuestionConfirmController.isYes = null;
     }

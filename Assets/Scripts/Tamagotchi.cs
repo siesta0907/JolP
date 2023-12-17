@@ -110,20 +110,18 @@ public class Tamagotchi : MonoBehaviour
     }
     public void Feed()
     {
-        EggMonStat.IncreaseStat("full", 10f);
-        EggMonStat.IncreaseStat("likeability", 1f);
+
     }
 
     public void Train()
     {
-        EggMonStat.IncreaseStat("intellect", 10f);
-        EggMonStat.IncreaseStat("likeability", 1f);
+        EggMonStat.DecreaseStat("health", 30);
+
+
     }
 
     public void Play()
     {
-        EggMonStat.IncreaseStat("playfulness", 10f);
-        EggMonStat.IncreaseStat("likeability", 3f);
     }
 
     public void Clean()
