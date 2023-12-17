@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
     public SerializableDictionary<Item, int> items;
-    public GameObject InventoryItemUI;
+   // public GameObject InventoryItemUI;
 
     public GameObject[] inventoryItems;
     public GameObject[] itemImages;
@@ -84,12 +84,10 @@ public class Inventory : MonoBehaviour
     }
 public void UseItem(Item item)
     {
-
         if (items.ContainsKey(item) && items[item] > 0)
         {
             FrameManager.instance.OpenQuestionConfirm();
             QuestionConfirmController.instance.SetQuestion(string.Format($"{item.itemName}을 사용하시겠습니까?"));
-            
             StartCoroutine(ConfirmUseItem(item));
 
         }
