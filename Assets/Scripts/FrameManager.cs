@@ -242,7 +242,7 @@ public class FrameManager : MonoBehaviour
     }
 
     // 모달 창 닫기 함수 수정
-    private void CloseModal(Canvas modalCanvas)
+    public void CloseModal(Canvas modalCanvas)
     {
         if (isModalOpen)
         {

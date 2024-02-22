@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
+
 
 // 다마고치 게임을 관리하는 클래스
 public class Tamagotchi : MonoBehaviour
@@ -32,6 +34,14 @@ public class Tamagotchi : MonoBehaviour
     public int hp = 4; // HP는 4로 시작
     public Sprite[] heartSprites; // 하트 스프라이트 배열
     public Image heartImage; // 하트 이미지를 보여줄 UI 컴포넌트
+
+
+    // 캐릭터가 더러워지는 과정 다루는 변수
+
+    public Sprite[] dirtinessSprites; // 더러워지는 스프라이트 배열
+    public SpriteRenderer characterSpriteRenderer; // 스프라이트를 렌더링하는 SpriteRenderer
+                                                   // 캐릭터 스프라이트를 보여주는 UI 컴포넌트
+
 
     // 다마고치의 초기화 함수
     void Start()
@@ -72,6 +82,8 @@ public class Tamagotchi : MonoBehaviour
             DecreaseStatsOverTime();
             UpdateUI();
             CheckForEvolution();
+            UpdateCharacterSprite(); // 새로 추가된 함수 호출
+
         }
     }
 
@@ -129,11 +141,44 @@ public class Tamagotchi : MonoBehaviour
     }
 
     // 씻기기 기능을 수행하는 메서드
+    public SpriteRenderer brush; // 솔 아이템의 Transform
+    public Transform[] brushTargets; // 솔이 이동할 타겟 위치 배열
+    private int currentTargetIndex = 0; // 현재 타겟 인덱스
+    public int dirtinessLevel = 6; // 예를 들어, 최대 더러움 정도를 6으로 설정
+
+    // 씻기기 기능을 수행하는 메서드
+    // 씻기기 기능을 수행하는 메서드
     public void Clean()
     {
-        EggMonStat.IncreaseStat("cleanliness", 10f);
-        EggMonStat.IncreaseStat("likeability", 1f);
-        // 씻기기에 대한 로직 추가
+        StartCoroutine(BrushMovement());
+    }
+
+    // 세 지점을 순서대로 찍는 코루틴
+    IEnumerator BrushMovement()
+    {
+        brush.gameObject.SetActive(true); // 브러시 활성화
+
+        foreach (var target in brushTargets)
+        {
+            // 타겟 지점으로 브러시 이동
+            while (brush.transform.position != target.position)
+            {
+                brush.transform.position = Vector3.MoveTowards(brush.transform.position, target.position, Time.deltaTime * 5f);
+                yield return null; // 다음 프레임까지 기다림
+            }
+
+            // 각 지점에 도달했을 때 잠깐 대기, 예를 들어 0.5초
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        // 모든 지점을 찍었으면 dirtinessLevel 감소
+        if (dirtinessLevel > 0)
+        {
+            dirtinessLevel--;
+            UpdateCharacterSprite(); // 필요한 경우 캐릭터 스프라이트 업데이트
+        }
+
+        brush.gameObject.SetActive(false); // 브러시 비활성화
     }
 
     // 친구 만나기 기능을 수행하는 메서드
@@ -171,6 +216,14 @@ public class Tamagotchi : MonoBehaviour
                 DecreaseHP(); // HP 감소 함수 호출
             }
         }
+        
+        // 시간에 따른 청결도 감소 로직이 정확히 동작하는지 확인
+        if (state != State.EGG && state == State.CHILD)
+        {
+            // 청결도 감소 로직
+            EggMonStat.DecreaseStat("cleanliness", Time.deltaTime * 10);
+        }
+
     }
 
     // HP UI 업데이트 메서드
@@ -256,4 +309,23 @@ public class Tamagotchi : MonoBehaviour
         // 추가 상태에 대한 진화 조건
         // ...
     }
+
+    // 캐릭터 스프라이트 업데이트 함수 - 서정 추가
+    void UpdateCharacterSprite()
+    {
+        // 현재 상태가 CHILD일 때만 더러워지는 스프라이트 적용
+        if (state == State.CHILD)
+        {
+            float cleanlinessPercentage = Mathf.Clamp(EggMonStat.cleanliness, 0, 100) / 100; // 0.0 ~ 1.0 사이의 값
+            int spriteIndex = (int)((1 - cleanlinessPercentage) * (dirtinessSprites.Length - 1));
+            characterSpriteRenderer.sprite = dirtinessSprites[spriteIndex];
+        }
+        else if (state == State.EGG)
+        {
+            // EGG 상태일 때의 스프라이트 설정, 필요하다면
+            // 예: characterImage.sprite = eggSprite;
+        }
+        // 기타 상태에 대한 스프라이트 설정도 여기에 추가할 수 있습니다.
+    }
+
 }
