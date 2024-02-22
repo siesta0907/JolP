@@ -55,4 +55,6 @@ public static class EggMonStat
             default: Debug.Log($"{stat}이라는 스탯은 존재하지 않습니다."); break;
         }
     }
+
+
 }

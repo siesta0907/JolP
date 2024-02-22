@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
 {
     // 인벤토리 싱글톤 인스턴스
     public static Inventory instance;
+    public GameObject characterGameObject; // 애니메이션 실행을 위한 선언
 
     // 아이템과 수량을 저장하는 딕셔너리
     public SerializableDictionary<Item, int> items;
@@ -131,6 +132,16 @@ public class Inventory : MonoBehaviour
             // 인벤토리 클리어 후 업데이트
             ClearInventory();
             InventoryUpdate();
+        }
+
+        // 현재 캔버스 닫기 (예: 인벤토리 캔버스)
+        FrameManager.instance.CloseModal(FrameManager.instance.inventory); // currentModalCanvas는 현재 열린 캔버스의 참조
+
+        // 캐릭터 애니메이션 실행
+        Animator characterAnimator = characterGameObject.GetComponent<Animator>();
+        if (characterAnimator != null)
+        {
+            characterAnimator.SetTrigger("useItem");
         }
 
         // 초기화
