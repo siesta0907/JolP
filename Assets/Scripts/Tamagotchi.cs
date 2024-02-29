@@ -66,6 +66,9 @@ public class Tamagotchi : MonoBehaviour
 
         // 잠자기 버튼 클릭 이벤트에 Sleep 메서드 연결
         sleepButton.onClick.AddListener(Sleep);
+
+        UpdateDirtinessLevel(); // 청결도에 따른 dirtinessLevel 초기 계산
+
     }
 
     // 날짜 카운터 UI 업데이트 함수
@@ -83,6 +86,10 @@ public class Tamagotchi : MonoBehaviour
             UpdateUI();
             CheckForEvolution();
             UpdateCharacterSprite(); // 새로 추가된 함수 호출
+            if (state == State.CHILD) // CHILD 상태에서만 dirtinessLevel 업데이트
+            {
+                UpdateDirtinessLevel();
+            }
 
         }
     }
@@ -146,24 +153,41 @@ public class Tamagotchi : MonoBehaviour
     private int currentTargetIndex = 0; // 현재 타겟 인덱스
     public int dirtinessLevel = 6; // 예를 들어, 최대 더러움 정도를 6으로 설정
 
+    // 청결도에 따른 dirtinessLevel 계산
+    void UpdateDirtinessLevel()
+    {
+        if (state >= State.CHILD) // CHILD 상태 이상부터 청결도가 적용
+        {
+            // 청결도가 50이면 dirtinessLevel을 3으로 설정하는 예시
+            float cleanlinessPercentage = EggMonStat.cleanliness / 100f; // 0.0 ~ 1.0 사이의 값
+            dirtinessLevel = Mathf.FloorToInt(6 - cleanlinessPercentage * 5); // 청결도 100일 때 1, 청결도 0일 때 6
+            dirtinessLevel = Mathf.Clamp(dirtinessLevel, 1, 6); // 값이 1~6 사이로 유지되도록 함
+        }
+    }
     // 씻기기 기능을 수행하는 메서드
-    // 씻기기 기능을 수행하는 메서드
+
     public void Clean()
     {
-        StartCoroutine(BrushMovement());
+        if (dirtinessLevel > 1) // dirtinessLevel이 1보다 크면 감소시킬 수 있음
+        {
+            dirtinessLevel--; // 씻길 때마다 dirtinessLevel 감소
+            UpdateCharacterSprite(); // 캐릭터 스프라이트 업데이트
+            StartCoroutine(BrushMovement()); // 씻기기 애니메이션 시작
+        }
     }
+
 
     // 세 지점을 순서대로 찍는 코루틴
     IEnumerator BrushMovement()
     {
         brush.gameObject.SetActive(true); // 브러시 활성화
 
-        foreach (var target in brushTargets)
+        for (int i = 0; i < brushTargets.Length; i++)
         {
             // 타겟 지점으로 브러시 이동
-            while (brush.transform.position != target.position)
+            while (brush.transform.position != brushTargets[i].position)
             {
-                brush.transform.position = Vector3.MoveTowards(brush.transform.position, target.position, Time.deltaTime * 5f);
+                brush.transform.position = Vector3.MoveTowards(brush.transform.position, brushTargets[i].position, Time.deltaTime * 300f);
                 yield return null; // 다음 프레임까지 기다림
             }
 
@@ -171,15 +195,9 @@ public class Tamagotchi : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
 
-        // 모든 지점을 찍었으면 dirtinessLevel 감소
-        if (dirtinessLevel > 0)
-        {
-            dirtinessLevel--;
-            UpdateCharacterSprite(); // 필요한 경우 캐릭터 스프라이트 업데이트
-        }
-
-        brush.gameObject.SetActive(false); // 브러시 비활성화
+        brush.gameObject.SetActive(false); // 브러시 비활성화 후 작업 완료
     }
+
 
     // 친구 만나기 기능을 수행하는 메서드
     public void MeetFriends()
@@ -207,7 +225,7 @@ public class Tamagotchi : MonoBehaviour
         if (state != State.EGG)
         {
             EggMonStat.DecreaseStat("full", 10f);
-            EggMonStat.DecreaseStat("cleanliness", 10f);
+            EggMonStat.DecreaseStat("cleanliness", 10f); // 청결도 감소
             EggMonStat.DecreaseStat("playfulness", 10f);
 
             // HP 감소 조건 추가
@@ -215,16 +233,22 @@ public class Tamagotchi : MonoBehaviour
             {
                 DecreaseHP(); // HP 감소 함수 호출
             }
+
+            // 청결도 감소 후 dirtinessLevel 업데이트
+            UpdateDirtinessLevel();
         }
-        
+
         // 시간에 따른 청결도 감소 로직이 정확히 동작하는지 확인
         if (state != State.EGG && state == State.CHILD)
         {
             // 청결도 감소 로직
             EggMonStat.DecreaseStat("cleanliness", Time.deltaTime * 10);
-        }
 
+            // dirtinessLevel 업데이트
+            UpdateDirtinessLevel();
+        }
     }
+
 
     // HP UI 업데이트 메서드
     void UpdateHeartSprite()
@@ -316,8 +340,8 @@ public class Tamagotchi : MonoBehaviour
         // 현재 상태가 CHILD일 때만 더러워지는 스프라이트 적용
         if (state == State.CHILD)
         {
-            float cleanlinessPercentage = Mathf.Clamp(EggMonStat.cleanliness, 0, 100) / 100; // 0.0 ~ 1.0 사이의 값
-            int spriteIndex = (int)((1 - cleanlinessPercentage) * (dirtinessSprites.Length - 1));
+            //float cleanlinessPercentage = Mathf.Clamp(EggMonStat.cleanliness, 0, 100) / 100; // 0.0 ~ 1.0 사이의 값
+            int spriteIndex = Mathf.Clamp(6 - dirtinessLevel, 0, dirtinessSprites.Length - 1);
             characterSpriteRenderer.sprite = dirtinessSprites[spriteIndex];
         }
         else if (state == State.EGG)
