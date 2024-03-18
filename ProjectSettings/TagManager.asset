@@ -41,9 +41,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: bac
+    uniqueID: 2458407621
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: 4
     uniqueID: 3472762577
+    locked: 0
+  - name: 9
+    uniqueID: 3077196627
+    locked: 0
+  - name: New Layer 4
+    uniqueID: 2056415053
     locked: 0

@@ -21,4 +21,10 @@ public class MoneyManager : MonoBehaviour
         // 돈을 표시하는 UI 텍스트 업데이트
         coinText.text = money.ToString();
     }
+
+    // 돈을 추가하는 함수
+    public static void AddMoney(int amount)
+    {
+        money += amount;
+    }
 }

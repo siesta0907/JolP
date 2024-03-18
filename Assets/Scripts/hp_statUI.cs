@@ -35,7 +35,7 @@ public class hp_statUI : MonoBehaviour
         hpSlider.value = healthRatio;
 
         // 디버그 로그 추가
-        Debug.Log("Health: " + EggMonStat.health + " / Max Health: " + EggMonStat.maxHealth + " - Ratio: " + healthRatio);
+        //Debug.Log("Health: " + EggMonStat.health + " / Max Health: " + EggMonStat.maxHealth + " - Ratio: " + healthRatio);
 
         // HP 바 이미지 크기 조절
         hpBarImage.rectTransform.sizeDelta = new Vector2(hpSlider.value * hpBarImage.rectTransform.sizeDelta.x, hpBarImage.rectTransform.sizeDelta.y);

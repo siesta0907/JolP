@@ -12,6 +12,7 @@ public class FrameManager : MonoBehaviour
     public Canvas Shop, Stat, inventory, QuestionConfirm, TrainPopup, OnlinePlay, Play, Work;
     public Button HomeBtn, ShopBtn, StatBtn, BagBtn, TrainpopBtn, OnlinePlayBtn, PlayBtn, WorkBtn, FoodBtn;
     public Image BackgroundImage; // 배경 이미지
+    public GameObject errorMessagePanel;
 
     private bool isModalOpen = false; // 모달 창이 열려 있는지 여부를 나타내는 플래그
     private Canvas currentModalCanvas; // 현재 열려 있는 모달 창을 추적하기 위한 변수
@@ -36,6 +37,7 @@ public class FrameManager : MonoBehaviour
         OnlinePlay.gameObject.SetActive(false);
         Play.gameObject.SetActive(false);
         Work.gameObject.SetActive(false);
+        
 
         // 각 버튼에 리스너 추가
         if (HomeBtn != null)
@@ -95,6 +97,7 @@ public class FrameManager : MonoBehaviour
             OnlinePlay.gameObject.SetActive(false);
             Play.gameObject.SetActive(false);
             Work.gameObject.SetActive(false);
+            
         }
     }
 
@@ -221,6 +224,14 @@ public class FrameManager : MonoBehaviour
     public void CloseWork()
     {
         CloseModal(Work);
+    }
+
+
+    
+    // 에러 패널을 닫는 메서드
+    public void CloseErrorMessagePanel()
+    {
+        errorMessagePanel.SetActive(false);
     }
 
     // 모달 창 열기 함수

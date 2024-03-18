@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections; // Coroutine을 사용하기 위해 필요
+using UnityEngine.UI; // UI 관련 기능을 사용하기 위해 필요
 
 public class TrainToggleManager : MonoBehaviour
 {
@@ -9,72 +11,112 @@ public class TrainToggleManager : MonoBehaviour
 
     public GameObject trainMenuPanel;
 
-    private Animator firstPanelAnimator;
-    private Animator secondPanelAnimator;
-    private Animator thirdPanelAnimator;
-    private Animator fourthPanelAnimator;
+    // 각 패널에 대응되는 이미지 GameObjects
+    public GameObject firstImage;
+    public GameObject secondImage;
+    public GameObject thirdImage;
+    public GameObject fourthImage;
+
+
 
     void Start()
     {
-        firstPanel.SetActive(true);
-        secondPanel.SetActive(false);
-        thirdPanel.SetActive(false);
-        fourthPanel.SetActive(false);
+        DisableAllPanelsAndImages();
 
-        // 패널에 연결된 Animator 컴포넌트 가져오기
-        firstPanelAnimator = firstPanel.GetComponent<Animator>();
-        secondPanelAnimator = secondPanel.GetComponent<Animator>();
-        thirdPanelAnimator = thirdPanel.GetComponent<Animator>();
-        fourthPanelAnimator = fourthPanel.GetComponent<Animator>();
     }
 
     public void ShowFirstPanel()
     {
-        firstPanel.SetActive(true);
-        secondPanel.SetActive(false);
-        thirdPanel.SetActive(false);
-        fourthPanel.SetActive(false);
+        ActivatePanel(firstPanel);
 
-        // 첫 번째 패널의 애니메이션 재생
-        firstPanelAnimator.SetTrigger("Show");
+        EggMonStat.DecreaseStat("health", 60); // 특정 상태 감소 -> 검술 훈련
+
+        StartCoroutine(ShowRewardImageAfterDelay(firstImage, 3f));
     }
 
     public void ShowSecondPanel()
     {
-        firstPanel.SetActive(false);
-        secondPanel.SetActive(true);
-        thirdPanel.SetActive(false);
-        fourthPanel.SetActive(false);
+        ActivatePanel(secondPanel);
 
-        // 두 번째 패널의 애니메이션 재생
-        secondPanelAnimator.SetTrigger("Show");
+        EggMonStat.DecreaseStat("health", 40); // 특정 상태 감소 -> 무용
+        StartCoroutine(ShowRewardImageAfterDelay(secondImage, 3f));
+
+
     }
 
     public void ShowThirdPanel()
     {
-        firstPanel.SetActive(false);
-        secondPanel.SetActive(false);
-        thirdPanel.SetActive(true);
-        fourthPanel.SetActive(false);
+        ActivatePanel(thirdPanel);
+        EggMonStat.DecreaseStat("health", 20); // 특정 상태 감소 -> 예절
 
-        // 세 번째 패널의 애니메이션 재생
-        thirdPanelAnimator.SetTrigger("Show");
+        StartCoroutine(ShowRewardImageAfterDelay(thirdImage, 3f));
+
     }
+
 
     public void ShowFourthPanel()
     {
+        ActivatePanel(fourthPanel);
+        EggMonStat.DecreaseStat("health", 30); // 특정 상태 감소 -> 사고력
+
+        StartCoroutine(ShowRewardImageAfterDelay(fourthImage, 3f));
+
+    }
+    private void ActivatePanel(GameObject panel)
+    {
+        // 모든 패널 비활성화
         firstPanel.SetActive(false);
         secondPanel.SetActive(false);
         thirdPanel.SetActive(false);
-        fourthPanel.SetActive(true);
+        fourthPanel.SetActive(false);
 
-        // 네 번째 패널의 애니메이션 재생
-        fourthPanelAnimator.SetTrigger("Show");
+        // 선택한 패널 활성화
+        panel.SetActive(true);
+    }
+
+
+    IEnumerator ShowRewardImageAfterDelay(GameObject rewardImage, float delay)
+    {
+        // 모든 보상 이미지 비활성화
+        firstImage.SetActive(false);
+        secondImage.SetActive(false);
+        thirdImage.SetActive(false);
+        fourthImage.SetActive(false);
+
+        // 지정된 시간만큼 대기
+        yield return new WaitForSeconds(delay);
+
+        // 해당 보상 이미지 활성화
+        rewardImage.SetActive(true);
     }
 
     public void ShowExitPanel()
     {
-        firstPanel.SetActive(false);
+        DisableAllPanelsAndImages();
         trainMenuPanel.SetActive(true);
+    }
+    private void DisableAllPanelsAndImages()
+    {
+        firstPanel.SetActive(false);
+        secondPanel.SetActive(false);
+        thirdPanel.SetActive(false);
+        fourthPanel.SetActive(false);
+
+        firstImage.SetActive(false);
+        secondImage.SetActive(false);
+        thirdImage.SetActive(false);
+        fourthImage.SetActive(false);
+    }
+
+    public void HideRewardImage()
+    {
+        // 모든 리워드 이미지 비활성화
+        firstImage.SetActive(false);
+        secondImage.SetActive(false);
+        thirdImage.SetActive(false);
+        fourthImage.SetActive(false);
+
+
+
     }
 }

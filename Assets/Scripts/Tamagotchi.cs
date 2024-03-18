@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic; // List를 사용하기 위해 필요
 
 
 // 다마고치 게임을 관리하는 클래스
@@ -41,6 +42,14 @@ public class Tamagotchi : MonoBehaviour
     public Sprite[] dirtinessSprites; // 더러워지는 스프라이트 배열
     public SpriteRenderer characterSpriteRenderer; // 스프라이트를 렌더링하는 SpriteRenderer
                                                    // 캐릭터 스프라이트를 보여주는 UI 컴포넌트
+    private Vector3 brushStartPosition;
+
+    // 스킨 스프라이트 배열
+    public Sprite[] skinSprites;
+    public GameObject[] skinGameObjects; // 스킨들을 담고 있는 GameObject 배열
+    private List<GameObject> activeSkins = new List<GameObject>(); // 현재 활성화된 스킨들을 추적하는 리스트
+    public GameObject errorMessagePanel; // 스킨 에러 메시지를 표시할 패널
+    public GameObject EGGTalkPanel;
 
 
     // 다마고치의 초기화 함수
@@ -68,6 +77,8 @@ public class Tamagotchi : MonoBehaviour
         sleepButton.onClick.AddListener(Sleep);
 
         UpdateDirtinessLevel(); // 청결도에 따른 dirtinessLevel 초기 계산
+        brushStartPosition = brush.transform.position; // 브러시의 초기 위치 저장
+
 
     }
 
@@ -98,12 +109,12 @@ public class Tamagotchi : MonoBehaviour
     void UpdateUI()
     {
         // 각 스탯을 UI에 표시
-        hungerText.text = "먹이기 : " + (int)Mathf.Clamp(EggMonStat.full, 0, 100);
+        /*hungerText.text = "먹이기 : " + (int)Mathf.Clamp(EggMonStat.full, 0, 100);
         trainingText.text = "훈련하기 : " + (int)Mathf.Clamp(EggMonStat.intellect, 0, 100);
         playfulnessText.text = "놀아주기 : " + (int)Mathf.Clamp(EggMonStat.playfulness, 0, 100);
         cleanlinessText.text = "씻기기 : " + (int)Mathf.Clamp(EggMonStat.cleanliness, 0, 100);
         socialText.text = "사회성 : " + (int)Mathf.Clamp(EggMonStat.social, 0, 100);
-        moneyText.text = "돈 : " + money;
+        moneyText.text = "돈 : " + money;*/
 
         // 남은 수명을 표시
         float remainingTime = timeToLive - timer;
@@ -137,7 +148,7 @@ public class Tamagotchi : MonoBehaviour
     // 훈련하기 기능을 수행하는 메서드
     public void Train()
     {
-        EggMonStat.DecreaseStat("health", 30);
+        
         // 훈련하기에 대한 로직 추가
     }
 
@@ -168,35 +179,49 @@ public class Tamagotchi : MonoBehaviour
 
     public void Clean()
     {
+        
         if (dirtinessLevel > 1) // dirtinessLevel이 1보다 크면 감소시킬 수 있음
         {
             dirtinessLevel--; // 씻길 때마다 dirtinessLevel 감소
             UpdateCharacterSprite(); // 캐릭터 스프라이트 업데이트
+            brush.transform.position = brushStartPosition; // 브러시를 초기 위치로 되돌림
             StartCoroutine(BrushMovement()); // 씻기기 애니메이션 시작
+            EggMonStat.IncreaseStat("cleanliness", 80);
         }
     }
 
 
     // 세 지점을 순서대로 찍는 코루틴
+
     IEnumerator BrushMovement()
     {
+        Vector3 startPosition = brush.transform.position; // 브러시의 초기 위치 저장
         brush.gameObject.SetActive(true); // 브러시 활성화
 
         for (int i = 0; i < brushTargets.Length; i++)
         {
-            // 타겟 지점으로 브러시 이동
+            // 각 타겟 위치로 이동
             while (brush.transform.position != brushTargets[i].position)
             {
                 brush.transform.position = Vector3.MoveTowards(brush.transform.position, brushTargets[i].position, Time.deltaTime * 300f);
-                yield return null; // 다음 프레임까지 기다림
+                yield return null;
             }
-
-            // 각 지점에 도달했을 때 잠깐 대기, 예를 들어 0.5초
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.5f); // 타겟에 도달하면 잠시 대기
         }
 
-        brush.gameObject.SetActive(false); // 브러시 비활성화 후 작업 완료
+        /*// 모든 타겟을 방문한 후 초기 위치로 돌아가기
+        while (brush.transform.position != startPosition)
+        {
+            
+            brush.transform.position = Vector3.MoveTowards(brush.transform.position, startPosition, Time.deltaTime * 300f);
+            yield return null;
+        }*/
+
+        brush.gameObject.SetActive(false); // 작업 완료 후 브러시 비활성화
+
     }
+
+
 
 
     // 친구 만나기 기능을 수행하는 메서드
@@ -210,13 +235,8 @@ public class Tamagotchi : MonoBehaviour
     // 일하기 기능을 수행하는 메서드
     public void Work()
     {
-        money += 50f; // 일정 금액을 추가
-        EggMonStat.DecreaseStat("full", 40f);
-        if (EggMonStat.full <= 0)
-        {
-            DecreaseHP(); // 배고픔이 0 이하이면 HP 감소
-        }
-        Debug.Log("돈 : " + money);
+        //money += 50f; // 일정 금액을 추가
+       
     }
 
     // 스탯 감소 메서드
@@ -283,9 +303,13 @@ public class Tamagotchi : MonoBehaviour
                 state = State.TEEN;
                 UpdateEvolutionStage(2);
                 timer = 0;
+                ResetSkins(); // 진화 시 모든 스킨 비활성화
+
+
                 break;
             case State.TEEN:
                 state = State.ADULT;
+
                 UpdateEvolutionStage(3);
                 timer = 0;
                 break;
@@ -351,5 +375,52 @@ public class Tamagotchi : MonoBehaviour
         }
         // 기타 상태에 대한 스프라이트 설정도 여기에 추가할 수 있습니다.
     }
+
+    // 스킨 적용 함수
+    public void ApplySkin(int skinIndex)
+    {
+        if (state == State.CHILD && skinIndex >= 0 && skinIndex < skinGameObjects.Length)
+        {
+            // 스킨 적용 로직
+            // 이전에 활성화된 스킨들 비활성화
+            foreach (GameObject activeSkin in activeSkins)
+            {
+                activeSkin.SetActive(false); // 활성화된 스킨 비활성화
+            }
+            activeSkins.Clear(); // 리스트 클리어
+
+            // 새 스킨 활성화
+            skinGameObjects[skinIndex].SetActive(true);
+            activeSkins.Add(skinGameObjects[skinIndex]); // 활성화된 스킨 리스트에 추가
+
+            // 현재 상태의 오브젝트 비활성화 (해당 부분은 필요에 따라 조정)
+            evolutionStages[(int)state].SetActive(false);
+
+            // 새 스킨으로 캐릭터 스프라이트 변경
+            characterSpriteRenderer.sprite = skinSprites[skinIndex];
+
+            // 에러 메시지 패널 비활성화
+            errorMessagePanel.SetActive(false);
+        }
+        else
+        {
+            // 모든 상태에 대한 공통 에러 처리
+            errorMessagePanel.SetActive(true);
+        }
+    }
+    
+
+    // 에러 패널을 닫는 메서드
+
+    // 진화 시 모든 스킨 비활성화
+    void ResetSkins()
+    {
+        foreach (GameObject activeSkin in activeSkins)
+        {
+            activeSkin.SetActive(false); // 모든 활성화된 스킨 비활성화
+        }
+        activeSkins.Clear(); // 활성화된 스킨 리스트 클리어
+    }
+    
 
 }

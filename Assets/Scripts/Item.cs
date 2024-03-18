@@ -14,6 +14,11 @@ public class Item : MonoBehaviour
     public Sprite itemImage; // 아이템 이미지
     public string itemType; // 아이템 종류
 
+    //추가
+    public AnimationClip Egg_Motion; // 알 먹는 모션
+    public AnimationClip Animation_Motion;    // Child 먹는 모션
+
+
     // 시작 시 호출되는 함수
     private void Start()
     {
@@ -44,14 +49,20 @@ public class Item : MonoBehaviour
         if (itemName == "Apple")
         {
             itemEffect.Add("full", 30);
+            
+
         }
         if (itemName == "Steak")
         {
             itemEffect.Add("full", 100);
+            
+
         }
-        if (itemName == "Bone")
+        if (itemName == "Can")
         {
-            itemEffect.Add("playfulness", 30);
+            itemEffect.Add("full", 30);
+            
+
         }
     }
 
