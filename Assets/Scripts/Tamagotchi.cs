@@ -11,10 +11,6 @@ public class Tamagotchi : MonoBehaviour
     // 다마고치의 상태를 정의하는 열거형
     public enum State { EGG, CHILD, TEEN, ADULT, DEAD }
     public State state; // 현재 다마고치의 상태
-    public float timer; // 다마고치의 타이머
-    public float timeToLive = 259200.0f; // 다마고치의 총 수명(3일)
-
-    public GameObject[] evolutionStages; // 진화 스테이지를 담을 배열
 
     public float money = 0f; // 돈
     public Button sleepButton; // 잠자기 버튼
@@ -27,30 +23,25 @@ public class Tamagotchi : MonoBehaviour
     public Text trainingText;
     public Text playfulnessText;
     public Text cleanlinessText;
- //   public Text timerText;
     public Text socialText;
     public Text moneyText;
 
     // HP와 관련된 변수
     public int hp = 4; // HP는 4로 시작
-    public Sprite[] heartSprites; // 하트 스프라이트 배열
-    public Image heartImage; // 하트 이미지를 보여줄 UI 컴포넌트
-
 
     // 캐릭터가 더러워지는 과정 다루는 변수
 
     public Sprite[] dirtinessSprites; // 더러워지는 스프라이트 배열
-    public SpriteRenderer characterSpriteRenderer; // 스프라이트를 렌더링하는 SpriteRenderer
+   // public SpriteRenderer characterSpriteRenderer; // 스프라이트를 렌더링하는 SpriteRenderer
                                                    // 캐릭터 스프라이트를 보여주는 UI 컴포넌트
     private Vector3 brushStartPosition;
 
-    // 스킨 스프라이트 배열
-    public Sprite[] skinSprites;
-    public GameObject[] skinGameObjects; // 스킨들을 담고 있는 GameObject 배열
-    private List<GameObject> activeSkins = new List<GameObject>(); // 현재 활성화된 스킨들을 추적하는 리스트
     public GameObject errorMessagePanel; // 스킨 에러 메시지를 표시할 패널
     public GameObject EGGTalkPanel;
 
+    public Image EggMon;
+
+    private bool isEvolve = false;
 
     // 다마고치의 초기화 함수
     void Start()
@@ -58,17 +49,8 @@ public class Tamagotchi : MonoBehaviour
         EggMonStat.InitializeStat();
 
         state = State.EGG;
-        timer = 0;
+        EggMon.sprite = Resources.Load<Sprite>("egg");
 
-        // 진화 스테이지 초기화
-        if (evolutionStages != null)
-        {
-            foreach (GameObject stage in evolutionStages)
-            {
-                stage.SetActive(false);
-            }
-            evolutionStages[0].SetActive(true);
-        }
 
         // 초기 날짜 표시
         UpdateDayCounterUI();
@@ -95,7 +77,7 @@ public class Tamagotchi : MonoBehaviour
         {
             DecreaseStatsOverTime();
             CheckForEvolution();
-            UpdateCharacterSprite(); // 새로 추가된 함수 호출
+          //  UpdateCharacterSprite(); // 새로 추가된 함수 호출
             if (state == State.CHILD) // CHILD 상태에서만 dirtinessLevel 업데이트
             {
                 UpdateDirtinessLevel();
@@ -110,7 +92,7 @@ public class Tamagotchi : MonoBehaviour
         // 날짜 카운터 증가
         dayCounter++;
         EggMonStat.health = EggMonStat.maxHealth; // 체력을 최대로 회복
-        UpdateHeartSprite(); // HP UI 업데이트
+
         MoneyManager.money += 50; // 돈 증가
         UpdateDayCounterUI(); // 날짜 카운터 UI 업데이트
 
@@ -158,7 +140,6 @@ public class Tamagotchi : MonoBehaviour
 
     public void Clean()
     {
-        
         if (dirtinessLevel > 1) // dirtinessLevel이 1보다 크면 감소시킬 수 있음
         {
             dirtinessLevel--; // 씻길 때마다 dirtinessLevel 감소
@@ -168,7 +149,6 @@ public class Tamagotchi : MonoBehaviour
             EggMonStat.IncreaseStat("cleanliness", 80);
         }
     }
-
 
     // 세 지점을 순서대로 찍는 코루틴
 
@@ -201,8 +181,6 @@ public class Tamagotchi : MonoBehaviour
     }
 
 
-
-
     // 친구 만나기 기능을 수행하는 메서드
     public void MeetFriends()
     {
@@ -230,7 +208,7 @@ public class Tamagotchi : MonoBehaviour
             // HP 감소 조건 추가
             if (EggMonStat.full <= 0 || EggMonStat.cleanliness <= 0)
             {
-                DecreaseHP(); // HP 감소 함수 호출
+                // DecreaseHP(); // HP 감소 함수 호출
             }
 
             // 청결도 감소 후 dirtinessLevel 업데이트
@@ -247,66 +225,42 @@ public class Tamagotchi : MonoBehaviour
             UpdateDirtinessLevel();
         }
     }
-
-
-    // HP UI 업데이트 메서드
-    void UpdateHeartSprite()
-    {
-        if (hp >= 0 && hp < heartSprites.Length)
-        {
-            heartImage.sprite = heartSprites[hp]; // 적절한 스프라이트로 업데이트
-        }
-    }
-
-    // HP 감소 메서드
-    public void DecreaseHP()
-    {
-        if (hp > 0) // HP가 0보다 클 때만 감소
-        {
-            hp -= 1; // HP를 1 감소
-            UpdateHeartSprite(); // 스프라이트 업데이트
-        }
-    }
+   
 
     // 진화 메서드
     void Evolve()
     {
+        if (!isEvolve) return;
+
         switch (state)
         {
             case State.EGG:
                 state = State.CHILD;
-                UpdateEvolutionStage(1);
-                timer = 0;
+                UpdateEvolutionStage("ch_n1_01");
                 break;
+
             case State.CHILD:
                 state = State.TEEN;
-                UpdateEvolutionStage(2);
-                timer = 0;
-                ResetSkins(); // 진화 시 모든 스킨 비활성화
-
-
+                UpdateEvolutionStage("ch_n1_02");;
                 break;
+
             case State.TEEN:
                 state = State.ADULT;
-
-                UpdateEvolutionStage(3);
-                timer = 0;
+                UpdateEvolutionStage("ch_n1_03");
                 break;
+
             case State.ADULT:
                 state = State.DEAD;
                 Debug.Log("다마고치가 죽었습니다!!");
                 break;
         }
+        isEvolve = false;
     }
 
     // 진화 스테이지 업데이트 메서드
-    void UpdateEvolutionStage(int index)
+    void UpdateEvolutionStage(string state)
     {
-        foreach (GameObject stage in evolutionStages)
-        {
-            stage.SetActive(false);
-        }
-        evolutionStages[index].SetActive(true);
+        EggMon.sprite = Resources.Load<Sprite>(state);
     }
 
     // 진화 조건을 확인하는 메서드
@@ -314,27 +268,30 @@ public class Tamagotchi : MonoBehaviour
     {
         // 각 상태별 진화에 필요한 최소 일수 + 1일
         int daysForEvolution = 3;
-
+        
         // EGG에서 CHILD로 진화하는 경우
         if (state == State.EGG && dayCounter > daysForEvolution)
         {
-            Evolve();
+            isEvolve = true;
             Debug.Log("EGG에서 CHILD로 진화하였습니다!");
         }
         // CHILD에서 TEEN으로 진화하는 경우
         else if (state == State.CHILD && dayCounter > daysForEvolution * 2)
         {
-            Evolve();
+            isEvolve = true;
             Debug.Log("CHILD에서 TEEN으로 진화하였습니다!");
         }
         // TEEN에서 ADULT로 진화하는 경우
         else if (state == State.TEEN && dayCounter > daysForEvolution * 3)
         {
-            Evolve();
+            isEvolve = true;
             Debug.Log("TEEN에서 ADULT로 진화하였습니다!");
         }
         // 추가 상태에 대한 진화 조건
         // ...
+
+        Evolve();
+
     }
 
     // 캐릭터 스프라이트 업데이트 함수 - 서정 추가
@@ -345,7 +302,7 @@ public class Tamagotchi : MonoBehaviour
         {
             //float cleanlinessPercentage = Mathf.Clamp(EggMonStat.cleanliness, 0, 100) / 100; // 0.0 ~ 1.0 사이의 값
             int spriteIndex = Mathf.Clamp(6 - dirtinessLevel, 0, dirtinessSprites.Length - 1);
-            characterSpriteRenderer.sprite = dirtinessSprites[spriteIndex];
+            EggMon.sprite = dirtinessSprites[spriteIndex];
         }
         else if (state == State.EGG)
         {
@@ -356,30 +313,11 @@ public class Tamagotchi : MonoBehaviour
     }
 
     // 스킨 적용 함수
-    public void ApplySkin(int skinIndex)
+    public void ApplySkin(string skinName)
     {
-        if (state == State.CHILD && skinIndex >= 0 && skinIndex < skinGameObjects.Length)
+        if (state == State.CHILD)
         {
-            // 스킨 적용 로직
-            // 이전에 활성화된 스킨들 비활성화
-            foreach (GameObject activeSkin in activeSkins)
-            {
-                activeSkin.SetActive(false); // 활성화된 스킨 비활성화
-            }
-            activeSkins.Clear(); // 리스트 클리어
-
-            // 새 스킨 활성화
-            skinGameObjects[skinIndex].SetActive(true);
-            activeSkins.Add(skinGameObjects[skinIndex]); // 활성화된 스킨 리스트에 추가
-
-            // 현재 상태의 오브젝트 비활성화 (해당 부분은 필요에 따라 조정)
-            evolutionStages[(int)state].SetActive(false);
-
-            // 새 스킨으로 캐릭터 스프라이트 변경
-            characterSpriteRenderer.sprite = skinSprites[skinIndex];
-
-            // 에러 메시지 패널 비활성화
-            errorMessagePanel.SetActive(false);
+            EggMon.sprite = Resources.Load<Sprite>(skinName);
         }
         else
         {
@@ -387,19 +325,5 @@ public class Tamagotchi : MonoBehaviour
             errorMessagePanel.SetActive(true);
         }
     }
-    
-
-    // 에러 패널을 닫는 메서드
-
-    // 진화 시 모든 스킨 비활성화
-    void ResetSkins()
-    {
-        foreach (GameObject activeSkin in activeSkins)
-        {
-            activeSkin.SetActive(false); // 모든 활성화된 스킨 비활성화
-        }
-        activeSkins.Clear(); // 활성화된 스킨 리스트 클리어
-    }
-    
 
 }

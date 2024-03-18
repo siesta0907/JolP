@@ -173,9 +173,6 @@ public class Inventory : MonoBehaviour
             }
 
 
-            
-
-
             // Child 상태일 때
             if (tamagotchi.state == Tamagotchi.State.CHILD)
             {
@@ -203,12 +200,11 @@ public class Inventory : MonoBehaviour
 
             
             // 장난감
-            if (item.itemName == "Block" && item.Animation_Motion != null)
+                if (item.itemName == "Block" && item.Animation_Motion != null)
                 {
                     EggMonStat.IncreaseStat("playfulness", 30);
 
                     anim.SetBool("playMotion", true);
-
 
                 }
                 if (item.itemName == "Car" && item.Animation_Motion != null)
@@ -228,20 +224,17 @@ public class Inventory : MonoBehaviour
                 //스킨
                 if (item.itemName == "Skin Berry")
                 {
-                    tamagotchi.ApplySkin(0); // ApplySkin 호출, 배열의 첫 번째 스킨
-                    ShowSkinUI(item.itemName); // UI 업데이트
+                    tamagotchi.ApplySkin("skin_char_berry"); // ApplySkin 호출, 배열의 첫 번째 스킨
                     Debug.Log("스킨1");
                 }
                 else if (item.itemName == "Skin Bread")
                 {
-                    tamagotchi.ApplySkin(1); // 배열의 두 번째 스킨
-                    ShowSkinUI(item.itemName); // UI 업데이트
+                    tamagotchi.ApplySkin("skin_char_bread"); // 배열의 두 번째 스킨
 
                 }
                 else if (item.itemName == "Skin Rabbit")
                 {
-                    tamagotchi.ApplySkin(2); // 배열의 세 번째 스킨
-                    ShowSkinUI(item.itemName); // UI 업데이트
+                    tamagotchi.ApplySkin("skin_char_rabbit"); // 배열의 세 번째 스킨
 
                 }
             }
@@ -263,8 +256,7 @@ public class Inventory : MonoBehaviour
             }
 
             
-                
-
+            
 
             // 수량이 0 이하이면 딕셔너리에서 아이템 제거
             if (items[item] <= 0)
@@ -301,28 +293,6 @@ public class Inventory : MonoBehaviour
             egganim.SetBool(animationBoolName, false);
             // 다음 반복 전에 짧은 대기 시간을 넣음 (필요에 따라 조절)
             //yield return new WaitForSeconds(0.1f);
-        }
-    }
-    // 스킨 UI 활성화 함수
-    public void ShowSkinUI(string skinName)
-    {
-        // 모든 스킨 UI를 먼저 비활성화
-        skin1.SetActive(false);
-        skin2.SetActive(false);
-        skin3.SetActive(false);
-
-        // 스킨 이름에 따라 해당하는 스킨 UI를 활성화
-        switch (skinName)
-        {
-            case "Skin Berry":
-                skin1.SetActive(true);
-                break;
-            case "Skin Bread":
-                skin2.SetActive(true);
-                break;
-            case "Skin Rabbit":
-                skin3.SetActive(true);
-                break;
         }
     }
 

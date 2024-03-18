@@ -49,7 +49,8 @@ public class WorkToggleManager : MonoBehaviour
 
         if (EggMonStat.full <= 0) // full은 배고픔을 뜻함
         {
-            tamagotchi.DecreaseHP(); // 배고픔이 0 이하이면 HP 감소
+            //tamagotchi.DecreaseHP(); // 배고픔이 0 이하이면 HP 감소
+            EggMonStat.DecreaseStat("health", 20);
         }
 
 
@@ -67,7 +68,7 @@ public class WorkToggleManager : MonoBehaviour
 
         if (EggMonStat.full <= 0) // full은 배고픔을 뜻함
         {
-            tamagotchi.DecreaseHP(); // 배고픔이 0 이하이면 HP 감소
+            EggMonStat.DecreaseStat("health", 20);
         }
 
 
@@ -83,7 +84,7 @@ public class WorkToggleManager : MonoBehaviour
 
         if (EggMonStat.full <= 0) // full은 배고픔을 뜻함
         {
-            tamagotchi.DecreaseHP(); // 배고픔이 0 이하이면 HP 감소
+            EggMonStat.DecreaseStat("health", 20);
         }
 
     }
@@ -98,7 +99,7 @@ public class WorkToggleManager : MonoBehaviour
 
         if (EggMonStat.full <= 0) // full은 배고픔을 뜻함
         {
-            tamagotchi.DecreaseHP(); // 배고픔이 0 이하이면 HP 감소
+            EggMonStat.DecreaseStat("health", 20);
         }
 
 
