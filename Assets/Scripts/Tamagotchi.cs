@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic; // List를 사용하기 위해 필요
+using UnityEditor.Animations;
 
 
 // 다마고치 게임을 관리하는 클래스
@@ -26,8 +27,6 @@ public class Tamagotchi : MonoBehaviour
     public Text socialText;
     public Text moneyText;
 
-    // HP와 관련된 변수
-    public int hp = 4; // HP는 4로 시작
 
     // 캐릭터가 더러워지는 과정 다루는 변수
 
@@ -40,6 +39,7 @@ public class Tamagotchi : MonoBehaviour
     public GameObject EGGTalkPanel;
 
     public Image EggMon;
+    public AnimatorController animatorController;
 
     private bool isEvolve = false;
 
@@ -237,6 +237,7 @@ public class Tamagotchi : MonoBehaviour
             case State.EGG:
                 state = State.CHILD;
                 UpdateEvolutionStage("ch_n1_01");
+               // animatorController 
                 break;
 
             case State.CHILD:
