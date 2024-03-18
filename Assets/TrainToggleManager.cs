@@ -27,9 +27,10 @@ public class TrainToggleManager : MonoBehaviour
 
     public void ShowFirstPanel()
     {
+        EggMonStat.DecreaseStat("health", 60); // 특정 상태 감소 -> 검술 훈련
         ActivatePanel(firstPanel);
 
-        EggMonStat.DecreaseStat("health", 60); // 특정 상태 감소 -> 검술 훈련
+        
 
         StartCoroutine(ShowRewardImageAfterDelay(firstImage, 3f));
     }

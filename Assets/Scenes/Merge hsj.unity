@@ -1520,86 +1520,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70256942}
   m_CullTransparentMesh: 1
---- !u!1 &79207225
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 79207226}
-  - component: {fileID: 79207228}
-  - component: {fileID: 79207227}
-  m_Layer: 5
-  m_Name: ee
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &79207226
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79207225}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 651050856}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 17.892822, y: -314.34125}
-  m_SizeDelta: {x: 482.01, y: 776.6274}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &79207227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79207225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 103a0479b821486448e75c4e398a7ee1, type: 3}
-    m_FontSize: 90
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 5
-    m_MaxSize: 90
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 
---- !u!222 &79207228
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79207225}
-  m_CullTransparentMesh: 1
 --- !u!1 &101940724
 GameObject:
   m_ObjectHideFlags: 0
@@ -4062,6 +3982,8 @@ MonoBehaviour:
   full_bar: {fileID: 387823906}
   social_bar: {fileID: 294990265}
   playfulness_bar: {fileID: 1746735354}
+  playerName: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!1 &278081845
 GameObject:
   m_ObjectHideFlags: 0
@@ -7741,7 +7663,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &462251400
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7759,7 +7681,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 32.725, y: -299.32}
+  m_AnchoredPosition: {x: 18.328, y: -54}
   m_SizeDelta: {x: 482.01, y: 776.6274}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &462251401
@@ -10365,7 +10287,6 @@ RectTransform:
   - {fileID: 1007220807}
   - {fileID: 872528042}
   - {fileID: 1904860076}
-  - {fileID: 79207226}
   m_Father: {fileID: 701872432}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16843,8 +16764,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbdf6f23a86e4548831b1fb8e7d8bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpSlider: {fileID: 2081042210}
-  hpBarImage: {fileID: 0}
 --- !u!1 &1025762618
 GameObject:
   m_ObjectHideFlags: 0
@@ -22456,7 +22375,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 32.725, y: -299.32}
+  m_AnchoredPosition: {x: 32.725, y: -77.5}
   m_SizeDelta: {x: 482.01, y: 776.6274}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1378155484
@@ -22481,19 +22400,19 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 103a0479b821486448e75c4e398a7ee1, type: 3}
-    m_FontSize: 90
+    m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 5
     m_MaxSize: 90
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uCF54\uC778 : +200\uBC31\uC5C5 \uB304\uC11C\uB85C \uD65C\uC57D\uD558\uC5EC
-    400\uCF54\uC778\uC744 \uBC1B\uC558\uC2B5\uB2C8\uB2E4!"
+  m_Text: "\uBC31\uC5C5 \uB304\uC11C\uB85C \uD65C\uC57D\uD558\uC5EC 400\uCF54\uC778\uC744
+    \uBC1B\uC558\uC2B5\uB2C8\uB2E4!"
 --- !u!222 &1378155485
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23290,7 +23209,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.475952, y: -278.37927}
+  m_AnchoredPosition: {x: 16.475952, y: -151.2}
   m_SizeDelta: {x: 482.01, y: 776.6274}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1428398988
@@ -26031,7 +25950,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.475952, y: -278.37927}
+  m_AnchoredPosition: {x: 16.475952, y: -157.9}
   m_SizeDelta: {x: 482.01, y: 776.6274}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1566138860
@@ -26067,7 +25986,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uCE74\uD398 \uC77C\uC744 \uB9C8\uCE58\uACE0 200\uCF54\uC778\uC744 \uBC1B\uC558\uC2B5\uB2C8\uB2E4!"
+  m_Text: "\uCE74\uD398 \uC77C\uC744 \uB9C8\uCE58\uACE0 \n200\uCF54\uC778\uC744 \uBC1B\uC558\uC2B5\uB2C8\uB2E4!"
 --- !u!222 &1566138861
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -35654,8 +35573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbdf6f23a86e4548831b1fb8e7d8bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpSlider: {fileID: 2081042210}
-  hpBarImage: {fileID: 1169031961}
 --- !u!1 &2089432883
 GameObject:
   m_ObjectHideFlags: 0
