@@ -7,10 +7,27 @@ using UnityEngine.UI;
 public class StatUI : MonoBehaviour
 {
     public Slider health_bar, intellect_bar, likeability_bar, cleanliness_bar, full_bar, social_bar, playfulness_bar;
+    public Text playerName;
+    public Image icon;
+
+    private void Start()
+    {
+        online_play.LoadPlayerData();
+    }
 
     // 프레임마다 호출되는 함수
     private void Update()
     {
+        if (online_play.playerIcon != null)
+        {
+            Sprite iconSprite = Resources.Load<Sprite>(online_play.playerIcon);
+            if (iconSprite != null)
+                icon.sprite = iconSprite;
+            else
+                Debug.Log($"{online_play.playerIcon}을 찾을 수 없음!");
+        }
+        if (online_play.playerName != null) playerName.text = online_play.playerName;
+        
         // 각 슬라이더의 최대값을 에그몬의 최대 스탯 값으로 설정
         health_bar.maxValue = EggMonStat.maxHealth;
 
