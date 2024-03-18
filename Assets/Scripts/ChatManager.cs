@@ -146,6 +146,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
     public void GameStartClick()
     {
         StartCoroutine(ChangeTextCoroutine());
+        GameStartBtn.gameObject.SetActive(false);
     }
 
     [PunRPC]
@@ -234,7 +235,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
         tmp1 = $"우승자는 {Players[whoisWinner].text} 입니다!";
         photonView.RPC("UpdateGuideText", RpcTarget.OthersBuffered, tmp1);
         yield return new WaitForSeconds(5f);
-        PhotonNetwork.LoadLevel("online");
+        PhotonNetwork.LoadLevel("Merge");
     }
 
 }

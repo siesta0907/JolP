@@ -27,7 +27,7 @@ public class Tamagotchi : MonoBehaviour
     public Text trainingText;
     public Text playfulnessText;
     public Text cleanlinessText;
-    public Text timerText;
+ //   public Text timerText;
     public Text socialText;
     public Text moneyText;
 
@@ -94,7 +94,6 @@ public class Tamagotchi : MonoBehaviour
         if (state != State.DEAD)
         {
             DecreaseStatsOverTime();
-            UpdateUI();
             CheckForEvolution();
             UpdateCharacterSprite(); // 새로 추가된 함수 호출
             if (state == State.CHILD) // CHILD 상태에서만 dirtinessLevel 업데이트
@@ -103,26 +102,6 @@ public class Tamagotchi : MonoBehaviour
             }
 
         }
-    }
-
-    // UI 업데이트 함수
-    void UpdateUI()
-    {
-        // 각 스탯을 UI에 표시
-        /*hungerText.text = "먹이기 : " + (int)Mathf.Clamp(EggMonStat.full, 0, 100);
-        trainingText.text = "훈련하기 : " + (int)Mathf.Clamp(EggMonStat.intellect, 0, 100);
-        playfulnessText.text = "놀아주기 : " + (int)Mathf.Clamp(EggMonStat.playfulness, 0, 100);
-        cleanlinessText.text = "씻기기 : " + (int)Mathf.Clamp(EggMonStat.cleanliness, 0, 100);
-        socialText.text = "사회성 : " + (int)Mathf.Clamp(EggMonStat.social, 0, 100);
-        moneyText.text = "돈 : " + money;*/
-
-        // 남은 수명을 표시
-        float remainingTime = timeToLive - timer;
-        int remainingHours = Mathf.FloorToInt(remainingTime / 3600);
-        int remainingMinutes = Mathf.FloorToInt((remainingTime % 3600) / 60);
-        int remainingSeconds = Mathf.FloorToInt(remainingTime % 60);
-
-        timerText.text = string.Format("{0:0}h {1:0}m {2:0}s", remainingHours, remainingMinutes, remainingSeconds);
     }
 
     // 잠자기 기능을 수행하는 메서드

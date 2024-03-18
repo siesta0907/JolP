@@ -25,7 +25,7 @@ public static class online_play
     // 데이터를 불러오는 함수
     public static void LoadPlayerData()
     {
-        playerIcon = PlayerPrefs.GetString("PlayerIcon", "egg1");
+        playerIcon = PlayerPrefs.GetString("PlayerIcon", "egg");
         playerName = PlayerPrefs.GetString("PlayerName", "Player");
         Debug.Log($"{playerName}의 프로필 사진의 이름은 {playerIcon}입니다..");
     }
