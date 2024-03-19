@@ -13,7 +13,7 @@ public class Tamagotchi : MonoBehaviour
     public enum State { EGG, CHILD, TEEN, ADULT, DEAD }
     public State state; // 현재 다마고치의 상태
 
-    public float money = 0f; // 돈
+
     public Button sleepButton; // 잠자기 버튼
 
     public int dayCounter = 1; // 현재 날짜 카운터
@@ -39,7 +39,8 @@ public class Tamagotchi : MonoBehaviour
     public GameObject EGGTalkPanel;
 
     public Image EggMon;
-    public AnimatorController animatorController;
+    public Animator animator;
+    public AnimatorController[] animatorController;
 
     private bool isEvolve = false;
 
@@ -50,7 +51,7 @@ public class Tamagotchi : MonoBehaviour
 
         state = State.EGG;
         EggMon.sprite = Resources.Load<Sprite>("egg");
-
+        animator.runtimeAnimatorController = animatorController[0];
 
         // 초기 날짜 표시
         UpdateDayCounterUI();
@@ -75,9 +76,8 @@ public class Tamagotchi : MonoBehaviour
     {
         if (state != State.DEAD)
         {
-            DecreaseStatsOverTime();
             CheckForEvolution();
-          //  UpdateCharacterSprite(); // 새로 추가된 함수 호출
+
             if (state == State.CHILD) // CHILD 상태에서만 dirtinessLevel 업데이트
             {
                 UpdateDirtinessLevel();
@@ -92,6 +92,9 @@ public class Tamagotchi : MonoBehaviour
         // 날짜 카운터 증가
         dayCounter++;
         EggMonStat.health = EggMonStat.maxHealth; // 체력을 최대로 회복
+        EggMonStat.DecreaseStat("cleanliness", 30); //청결도 30 감소
+        EggMonStat.DecreaseStat("full", 30); //
+        EggMonStat.DecreaseStat("playfulness", 30); //
 
         MoneyManager.money += 50; // 돈 증가
         UpdateDayCounterUI(); // 날짜 카운터 UI 업데이트
@@ -185,47 +188,13 @@ public class Tamagotchi : MonoBehaviour
     public void MeetFriends()
     {
         EggMonStat.IncreaseStat("social", 10f);
-        EggMonStat.DecreaseStat("cleanliness", 1f);
+        EggMonStat.DecreaseStat("cleanliness", 10f);
         // 친구 만나기에 대한 로직 추가
     }
 
-    // 일하기 기능을 수행하는 메서드
-    public void Work()
-    {
-        //money += 50f; // 일정 금액을 추가
-       
-    }
 
     // 스탯 감소 메서드
-    void DecreaseStatsOverTime()
-    {
-        if (state != State.EGG)
-        {
-            EggMonStat.DecreaseStat("full", 10f);
-            EggMonStat.DecreaseStat("cleanliness", 10f); // 청결도 감소
-            EggMonStat.DecreaseStat("playfulness", 10f);
-
-            // HP 감소 조건 추가
-            if (EggMonStat.full <= 0 || EggMonStat.cleanliness <= 0)
-            {
-                // DecreaseHP(); // HP 감소 함수 호출
-            }
-
-            // 청결도 감소 후 dirtinessLevel 업데이트
-            UpdateDirtinessLevel();
-        }
-
-        // 시간에 따른 청결도 감소 로직이 정확히 동작하는지 확인
-        if (state != State.EGG && state == State.CHILD)
-        {
-            // 청결도 감소 로직
-            EggMonStat.DecreaseStat("cleanliness", Time.deltaTime * 10);
-
-            // dirtinessLevel 업데이트
-            UpdateDirtinessLevel();
-        }
-    }
-   
+    
 
     // 진화 메서드
     void Evolve()
@@ -237,7 +206,7 @@ public class Tamagotchi : MonoBehaviour
             case State.EGG:
                 state = State.CHILD;
                 UpdateEvolutionStage("ch_n1_01");
-               // animatorController 
+                animator.runtimeAnimatorController = animatorController[1];
                 break;
 
             case State.CHILD:
@@ -299,9 +268,8 @@ public class Tamagotchi : MonoBehaviour
     void UpdateCharacterSprite()
     {
         // 현재 상태가 CHILD일 때만 더러워지는 스프라이트 적용
-        if (state == State.CHILD)
+        if (state == State.CHILD && dirtinessLevel > 1)
         {
-            //float cleanlinessPercentage = Mathf.Clamp(EggMonStat.cleanliness, 0, 100) / 100; // 0.0 ~ 1.0 사이의 값
             int spriteIndex = Mathf.Clamp(6 - dirtinessLevel, 0, dirtinessSprites.Length - 1);
             EggMon.sprite = dirtinessSprites[spriteIndex];
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,24 +47,37 @@ public class Item : MonoBehaviour
     private void SetEffect()
     {
         // 아이템 이름에 따라 효과를 설정
+
+        //음식 효과
         if (itemName == "Apple")
         {
             itemEffect.Add("full", 30);
-            
-
         }
         if (itemName == "Steak")
         {
             itemEffect.Add("full", 100);
-            
 
         }
         if (itemName == "Can")
         {
             itemEffect.Add("full", 30);
-            
-
         }
+
+        //장난감 효과
+        if (itemName == "Block")
+        {
+            itemEffect.Add("playfulness", 30);
+        }
+        if (itemName == "Car")
+        {
+            itemEffect.Add("playfulness", 50);
+        }
+        if (itemName == "Game")
+        {
+            itemEffect.Add("playfulness", 90);
+        }
+
+
     }
 
     // 아이템을 구매하는 함수
@@ -79,15 +93,42 @@ public class Item : MonoBehaviour
         // 소지한 돈이 아이템 가격보다 많은 경우
         if (MoneyManager.money > price)
         {
-            // 인벤토리에 아이템 추가 및 돈 차감
-            Inventory.instance.GetItem(this);
-            MoneyManager.money -= price;
-            Debug.Log(string.Format($"{itemName}을 구매하였습니다"));
+            FrameManager.instance.OpenQuestionConfirm();
+            QuestionConfirmController.instance.SetQuestion(string.Format($"{itemName}을 구매하시겠습니까?"));
+            StartCoroutine(ConfirmPayItem(this));
         }
         else
         {
             // 돈이 부족한 경우
             Debug.Log("골드가 부족하여 구매에 실패하였습니다.");
         }
+    }
+    // 아이템 사용 확인 코루틴
+    private IEnumerator ConfirmPayItem(Item item)
+    {
+        QuestionConfirmController.instance.buttonClickedTask = new TaskCompletionSource<bool>();
+        Button YesButton = QuestionConfirmController.instance.YesBtn;
+        Button NoButtom = QuestionConfirmController.instance.NoBtn;
+
+        yield return new WaitUntil(() => QuestionConfirmController.instance.buttonClickedTask.Task.IsCompleted);
+
+        if (QuestionConfirmController.isYes == true)
+        {
+            // 인벤토리에 아이템 추가 및 돈 차감
+            Inventory.instance.GetItem(this);
+            MoneyManager.money -= price;
+        }
+        else
+        {
+
+        }
+        Inventory.instance.ClearInventory();
+        Inventory.instance.InventoryUpdate();
+
+        // 현재 캔버스 닫기
+        FrameManager.instance.CloseModal(FrameManager.instance.Shop); // currentModalCanvas는 현재 열린 캔버스의 참조
+
+        // 초기화
+        QuestionConfirmController.isYes = null;
     }
 }
