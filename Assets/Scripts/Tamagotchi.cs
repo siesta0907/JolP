@@ -10,7 +10,7 @@ using UnityEditor.Animations;
 public class Tamagotchi : MonoBehaviour
 {
     // 다마고치의 상태를 정의하는 열거형
-    public enum State { EGG, CHILD, TEEN, ADULT, DEAD }
+    public enum State { EGG, CHILD, TEEN, ADULT, DEAD, ENDING }
     public State state; // 현재 다마고치의 상태
 
 
@@ -26,7 +26,7 @@ public class Tamagotchi : MonoBehaviour
     public Text cleanlinessText;
     public Text socialText;
     public Text moneyText;
-
+    public GameObject endingPanel; // 엔딩 패널의 참조
 
     // 캐릭터가 더러워지는 과정 다루는 변수
 
@@ -82,6 +82,12 @@ public class Tamagotchi : MonoBehaviour
             if (state == State.CHILD) // CHILD 상태에서만 dirtinessLevel 업데이트
             {
                 UpdateDirtinessLevel();
+            }
+
+            // 10일이 지나면 엔딩을 트리거
+            if (dayCounter > 10)
+            {
+                TriggerEnding();
             }
 
         }
@@ -297,6 +303,16 @@ public class Tamagotchi : MonoBehaviour
             // 모든 상태에 대한 공통 에러 처리
             errorMessagePanel.SetActive(true);
         }
+    }
+
+    public void TriggerEnding()
+    {
+        state = State.ENDING; // 게임 상태를 엔딩으로 변경
+                              // 게임을 멈추거나 엔딩 관련 UI를 활성화하는 로직 추가
+        endingPanel.SetActive(true);
+        Debug.Log("게임 엔딩 도달!");
+
+        
     }
 
 }
