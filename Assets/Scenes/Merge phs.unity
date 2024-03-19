@@ -994,7 +994,7 @@ Animator:
   m_GameObject: {fileID: 42832433}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4feae0d9f8b744b428aadf514ce9aeff, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -14204,7 +14204,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1893055632}
         m_TargetAssemblyTypeName: FrameManager, Assembly-CSharp
         m_MethodName: CloseOnlinePlay
         m_Mode: 1
@@ -17650,7 +17650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ee15c5899d92040892ddd18f19dad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelToActivate: {fileID: 485920295}
 --- !u!114 &1148976899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20279,7 +20278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ee15c5899d92040892ddd18f19dad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelToActivate: {fileID: 1905623287}
 --- !u!114 &1343828337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27747,7 +27745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ee15c5899d92040892ddd18f19dad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelToActivate: {fileID: 1112547356}
 --- !u!114 &1760689710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29566,7 +29563,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ee15c5899d92040892ddd18f19dad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelToActivate: {fileID: 1905623287}
 --- !u!1 &1866505054
 GameObject:
   m_ObjectHideFlags: 0
