@@ -216,17 +216,23 @@ public class Inventory : MonoBehaviour
                 //스킨
                 if (item.itemName == "Skin Berry")
                 {
-                    tamagotchi.ApplySkin("skin_char_berry"); // ApplySkin 호출, 배열의 첫 번째 스킨
+                    //tamagotchi.ApplySkin("skin_char_berry"); // ApplySkin 호출, 배열의 첫 번째 스킨
+                    SkinOff();
+                    anim.SetBool("skin1", true);
 
                 }
                 else if (item.itemName == "Skin Bread")
                 {
-                    tamagotchi.ApplySkin("skin_char_bread"); // 배열의 두 번째 스킨
+                    //tamagotchi.ApplySkin("skin_char_bread"); // 배열의 두 번째 스킨
+                    SkinOff();
+                    anim.SetBool("skin2", true);
 
                 }
                 else if (item.itemName == "Skin Rabbit")
                 {
-                    tamagotchi.ApplySkin("skin_char_rabbit"); // 배열의 세 번째 스킨
+                    //tamagotchi.ApplySkin("skin_char_rabbit"); // 배열의 세 번째 스킨
+                    SkinOff();
+                    anim.SetBool("skin3", true);
 
                 }
             }
@@ -285,5 +291,10 @@ public class Inventory : MonoBehaviour
             //yield return new WaitForSeconds(0.1f);
         }
     }
-
+    void SkinOff()
+    {
+        anim.SetBool("skin1", false);
+        anim.SetBool("skin2", false);
+        anim.SetBool("skin3", false);
+    }
 }

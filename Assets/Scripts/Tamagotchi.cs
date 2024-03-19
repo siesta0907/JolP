@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic; // List를 사용하기 위해 필요
-using UnityEditor.Animations;
+//using UnityEditor.Animations;
 
 
 // 다마고치 게임을 관리하는 클래스
@@ -40,7 +40,7 @@ public class Tamagotchi : MonoBehaviour
 
     public Image EggMon;
     public Animator animator;
-    public AnimatorController[] animatorController;
+    public RuntimeAnimatorController[] animatorController;
     public Sprite[] EvolveSprite;
 
     private bool isEvolve = false;
@@ -99,9 +99,9 @@ public class Tamagotchi : MonoBehaviour
         // 날짜 카운터 증가
         dayCounter++;
         EggMonStat.health = EggMonStat.maxHealth; // 체력을 최대로 회복
-        EggMonStat.DecreaseStat("cleanliness", 30); //청결도 30 감소
-        EggMonStat.DecreaseStat("full", 30); //
-        EggMonStat.DecreaseStat("playfulness", 30); //
+        EggMonStat.DecreaseStat("cleanliness", 10); //청결도 30 감소
+        EggMonStat.DecreaseStat("full", 10); //
+        EggMonStat.DecreaseStat("playfulness", 10); //
 
         MoneyManager.money += 50; // 돈 증가
         UpdateDayCounterUI(); // 날짜 카운터 UI 업데이트
@@ -243,7 +243,6 @@ public class Tamagotchi : MonoBehaviour
     void UpdateEvolutionStage(int state)
     {
         EggMon.sprite = EvolveSprite[state];
-        Debug.Log("바뀜!");
     }
 
     // 진화 조건을 확인하는 메서드
