@@ -16,6 +16,7 @@ public class FrameManager : MonoBehaviour
 
     private bool isModalOpen = false; // 모달 창이 열려 있는지 여부를 나타내는 플래그
     private Canvas currentModalCanvas; // 현재 열려 있는 모달 창을 추적하기 위한 변수
+    public Tamagotchi tamagotchi;
 
     // 초기화 함수
     private void Awake()
@@ -161,8 +162,17 @@ public class FrameManager : MonoBehaviour
     // 훈련 팝업 열기 함수
     public void OpenTrainPopup()
     {
-        OpenModal(TrainPopup);
+        // 다마고치의 상태가 CHILD인지 확인
+        if (tamagotchi.state == Tamagotchi.State.CHILD)
+        {
+            OpenModal(TrainPopup);
+        }
+        else
+        {
+            tamagotchi.TrainErrorPanel.SetActive(true); // CHILD 상태가 아니면 에러 패널 활성화
+        }
     }
+
 
     // 훈련 팝업 닫기 함수
     public void CloseTrainPopup()
@@ -185,10 +195,18 @@ public class FrameManager : MonoBehaviour
     // 놀이 창 열기 함수
     public void OpenPlay()
     {
-        Inventory.instance.OpenWithItemType = "Toy";
-        Inventory.instance.ClearInventory();
-        Inventory.instance.InventoryUpdate();
-        OpenModal(inventory);
+        // 다마고치의 상태가 CHILD인지 확인
+        if (tamagotchi.state == Tamagotchi.State.CHILD)
+        {
+            Inventory.instance.OpenWithItemType = "Toy";
+            Inventory.instance.ClearInventory();
+            Inventory.instance.InventoryUpdate();
+            OpenModal(inventory);
+        }
+        else
+        {
+            tamagotchi.PlayErrorPanel.SetActive(true); // CHILD 상태가 아니면 에러 패널 활성화
+        }
     }
 
     // 놀이 창 닫기 함수
@@ -233,6 +251,16 @@ public class FrameManager : MonoBehaviour
     {
         errorMessagePanel.SetActive(false);
     }
+
+    public void CloseTrainMessagePanel()
+    {
+        tamagotchi.TrainErrorPanel.SetActive(false);
+    }
+    public void ClosePlayMessagePanel()
+    {
+        tamagotchi.PlayErrorPanel.SetActive(false);
+    }
+
 
     // 모달 창 열기 함수
     private void OpenModal(Canvas modalCanvas)

@@ -4,6 +4,7 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic; // List를 사용하기 위해 필요
 //using UnityEditor.Animations;
+using UnityEngine.SceneManagement;
 
 
 // 다마고치 게임을 관리하는 클래스
@@ -36,7 +37,12 @@ public class Tamagotchi : MonoBehaviour
     private Vector3 brushStartPosition;
 
     public GameObject errorMessagePanel; // 스킨 에러 메시지를 표시할 패널
+
     public GameObject EGGTalkPanel;
+
+    public GameObject TrainErrorPanel; // 스킨 에러 메시지를 표시할 패널
+
+    public GameObject PlayErrorPanel; // 스킨 에러 메시지를 표시할 패널
 
     public Image EggMon;
     public Animator animator;
@@ -119,14 +125,42 @@ public class Tamagotchi : MonoBehaviour
     // 훈련하기 기능을 수행하는 메서드
     public void Train()
     {
-        
-        // 훈련하기에 대한 로직 추가
+
+        if (state == State.CHILD)
+        {
+            // CHILD 상태일 때 훈련 로직 수행
+            // 예: 훈련 관련 애니메이션 표시, 스탯 증가 등
+            Debug.Log("훈련을 시작합니다.");
+            // 여기에 훈련 로직을 추가하세요.
+        }
+        else
+        {
+            // CHILD 상태가 아니면 오류 메시지 패널을 활성화
+            TrainErrorPanel.SetActive(true);
+            Debug.Log("CHILD 상태에서만 훈련할 수 있습니다.");
+            // errorMessagePanel에 있는 텍스트 컴포넌트를 찾아서 오류 메시지를 업데이트할 수도 있습니다.
+            // 예: errorMessagePanel.GetComponentInChildren<Text>().text = "CHILD 상태에서만 훈련할 수 있습니다.";
+        }
     }
 
     // 놀아주기 기능을 수행하는 메서드
     public void Play()
     {
-        // 놀아주기에 대한 로직 추가
+        if (state == State.CHILD)
+        {
+            // CHILD 상태일 때 훈련 로직 수행
+            // 예: 훈련 관련 애니메이션 표시, 스탯 증가 등
+            Debug.Log("놀이를 시작합니다.");
+            // 여기에 훈련 로직을 추가하세요.
+        }
+        else
+        {
+            // CHILD 상태가 아니면 오류 메시지 패널을 활성화
+            PlayErrorPanel.SetActive(true);
+            Debug.Log("CHILD 상태에서만 훈련할 수 있습니다.");
+            // errorMessagePanel에 있는 텍스트 컴포넌트를 찾아서 오류 메시지를 업데이트할 수도 있습니다.
+            // 예: errorMessagePanel.GetComponentInChildren<Text>().text = "CHILD 상태에서만 훈련할 수 있습니다.";
+        }
     }
 
     // 씻기기 기능을 수행하는 메서드
@@ -302,6 +336,10 @@ public class Tamagotchi : MonoBehaviour
             // 모든 상태에 대한 공통 에러 처리
             errorMessagePanel.SetActive(true);
         }
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void TriggerEnding()
