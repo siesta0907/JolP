@@ -994,7 +994,7 @@ Animator:
   m_GameObject: {fileID: 42832433}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4feae0d9f8b744b428aadf514ce9aeff, type: 2}
+  m_Controller: {fileID: 9100000, guid: 20fd6b3ee1db12045a6567fcfc770fab, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4203,6 +4203,8 @@ MonoBehaviour:
   animatorController:
   - {fileID: 9100000, guid: 4feae0d9f8b744b428aadf514ce9aeff, type: 2}
   - {fileID: 9100000, guid: 74748bc5225a3a84ab8fc8b3b8d0f763, type: 2}
+  - {fileID: 9100000, guid: 515ab105250cfb041a824341a15016dc, type: 2}
+  - {fileID: 9100000, guid: 20fd6b3ee1db12045a6567fcfc770fab, type: 2}
   EvolveSprite:
   - {fileID: -388998084, guid: 00aead80334a2db448c927d22e496cab, type: 3}
   - {fileID: 21300000, guid: 3b8a0a8eb3faea048b6ad730209309fa, type: 3}
