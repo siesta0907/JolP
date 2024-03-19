@@ -215,12 +215,14 @@ public class Tamagotchi : MonoBehaviour
                 state = State.TEEN;
                 Debug.Log("CHILD에서 TEEN으로 진화하였습니다!");
                 UpdateEvolutionStage(2);
+                animator.runtimeAnimatorController = animatorController[2];
                 break;
 
             case State.TEEN:
                 state = State.ADULT;
                 Debug.Log("TEEN에서 ADULT로 진화하였습니다!");
                 UpdateEvolutionStage(3);
+                animator.runtimeAnimatorController = animatorController[3];
                 break;
 
             case State.ADULT:
