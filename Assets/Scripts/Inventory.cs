@@ -192,25 +192,28 @@ public class Inventory : MonoBehaviour
 
             
             // 장난감
-                if (item.itemName == "Block" && item.Animation_Motion != null)
+                if (item.itemName == "Block")
                 {
-                   // EggMonStat.IncreaseStat("playfulness", 30);
+                    // EggMonStat.IncreaseStat("playfulness", 30);
 
-                    anim.SetBool("playMotion", true);
+                    //anim.SetBool("playMotion", true);
+                    StartCoroutine(PlayAnimationRepeat("playMotion", 1));
 
                 }
-                if (item.itemName == "Car" && item.Animation_Motion != null)
+                if (item.itemName == "Car")
                 {
-                   // EggMonStat.IncreaseStat("playfulness", 50);
+                    // EggMonStat.IncreaseStat("playfulness", 50);
 
-                    anim.SetBool("playMotion", true);
+                    //anim.SetBool("playMotion", true);
+                    StartCoroutine(PlayAnimationRepeat("playMotion", 1));
 
                 }
-                if (item.itemName == "Game" && item.Animation_Motion != null)
+                if (item.itemName == "Game")
                 {
-                   // EggMonStat.IncreaseStat("playfulness", 90);
+                    // EggMonStat.IncreaseStat("playfulness", 90);
 
-                    anim.SetBool("playMotion", true);
+                    //anim.SetBool("playMotion", true);
+                    StartCoroutine(PlayAnimationRepeat("playMotion", 1));
 
                 }
                 //스킨
@@ -280,12 +283,12 @@ public class Inventory : MonoBehaviour
             anim.SetBool(animationBoolName, true);
             Debug.Log("애니메이션이 실행됩니다.");
          //   egganim.SetBool(animationBoolName, true);
-            tamagotchi.EGGTalkPanel.SetActive(true);
+        //    tamagotchi.EGGTalkPanel.SetActive(true);
             // 애니메이션이 완전히 끝날 때까지 기다림 (애니메이션 길이를 조정하세요)
             yield return new WaitForSeconds(1.5f); // 예제로 1초 설정
 
             anim.SetBool(animationBoolName, false);
-            tamagotchi.EGGTalkPanel.SetActive(false);
+            //tamagotchi.EGGTalkPanel.SetActive(false);
         //    egganim.SetBool(animationBoolName, false);
             // 다음 반복 전에 짧은 대기 시간을 넣음 (필요에 따라 조절)
             //yield return new WaitForSeconds(0.1f);
