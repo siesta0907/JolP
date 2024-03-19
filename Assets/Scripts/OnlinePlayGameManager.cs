@@ -12,7 +12,7 @@ public class OnlinePlayGameManager : MonoBehaviour
     void Update()
     {
         playerName.text = online_play.playerName;
-        icon.sprite = Resources.Load<Sprite>(online_play.playerIcon);
+       // icon.sprite = Resources.Load<Sprite>(online_play.playerIcon);
     }
     public void RenameNickName()
     {
