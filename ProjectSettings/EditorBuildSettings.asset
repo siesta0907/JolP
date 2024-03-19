@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Merge phs.unity
+    path: Assets/Scenes/Merge.unity
     guid: c0865841ff68e5b44bc4b6c4bd9ea8b5
   - enabled: 1
     path: Assets/Scenes/Multi.unity
