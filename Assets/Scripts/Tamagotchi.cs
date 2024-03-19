@@ -41,6 +41,7 @@ public class Tamagotchi : MonoBehaviour
     public Image EggMon;
     public Animator animator;
     public AnimatorController[] animatorController;
+    public Sprite[] EvolveSprite;
 
     private bool isEvolve = false;
 
@@ -50,7 +51,7 @@ public class Tamagotchi : MonoBehaviour
         EggMonStat.InitializeStat();
 
         state = State.EGG;
-        EggMon.sprite = Resources.Load<Sprite>("egg");
+        EggMon.sprite = EvolveSprite[0];
         animator.runtimeAnimatorController = animatorController[0];
 
         // 초기 날짜 표시
@@ -205,18 +206,21 @@ public class Tamagotchi : MonoBehaviour
         {
             case State.EGG:
                 state = State.CHILD;
-                UpdateEvolutionStage("ch_n1_01");
+                Debug.Log("EGG에서 CHILD로 진화하였습니다!");
+                UpdateEvolutionStage(1);
                 animator.runtimeAnimatorController = animatorController[1];
                 break;
 
             case State.CHILD:
                 state = State.TEEN;
-                UpdateEvolutionStage("ch_n1_02");;
+                Debug.Log("CHILD에서 TEEN으로 진화하였습니다!");
+                UpdateEvolutionStage(2);
                 break;
 
             case State.TEEN:
                 state = State.ADULT;
-                UpdateEvolutionStage("ch_n1_03");
+                Debug.Log("TEEN에서 ADULT로 진화하였습니다!");
+                UpdateEvolutionStage(3);
                 break;
 
             case State.ADULT:
@@ -228,9 +232,10 @@ public class Tamagotchi : MonoBehaviour
     }
 
     // 진화 스테이지 업데이트 메서드
-    void UpdateEvolutionStage(string state)
+    void UpdateEvolutionStage(int state)
     {
-        EggMon.sprite = Resources.Load<Sprite>(state);
+        EggMon.sprite = EvolveSprite[state];
+        Debug.Log("바뀜!");
     }
 
     // 진화 조건을 확인하는 메서드
@@ -243,19 +248,16 @@ public class Tamagotchi : MonoBehaviour
         if (state == State.EGG && dayCounter > daysForEvolution)
         {
             isEvolve = true;
-            Debug.Log("EGG에서 CHILD로 진화하였습니다!");
         }
         // CHILD에서 TEEN으로 진화하는 경우
         else if (state == State.CHILD && dayCounter > daysForEvolution * 2)
         {
             isEvolve = true;
-            Debug.Log("CHILD에서 TEEN으로 진화하였습니다!");
         }
         // TEEN에서 ADULT로 진화하는 경우
         else if (state == State.TEEN && dayCounter > daysForEvolution * 3)
         {
             isEvolve = true;
-            Debug.Log("TEEN에서 ADULT로 진화하였습니다!");
         }
         // 추가 상태에 대한 진화 조건
         // ...
@@ -271,7 +273,7 @@ public class Tamagotchi : MonoBehaviour
         if (state == State.CHILD && dirtinessLevel > 1)
         {
             int spriteIndex = Mathf.Clamp(6 - dirtinessLevel, 0, dirtinessSprites.Length - 1);
-            EggMon.sprite = dirtinessSprites[spriteIndex];
+            //  EggMon.sprite = dirtinessSprites[spriteIndex];
         }
         else if (state == State.EGG)
         {

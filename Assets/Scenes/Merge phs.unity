@@ -966,7 +966,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -388998084, guid: 00aead80334a2db448c927d22e496cab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3b8a0a8eb3faea048b6ad730209309fa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -994,7 +994,7 @@ Animator:
   m_GameObject: {fileID: 42832433}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4feae0d9f8b744b428aadf514ce9aeff, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4179,7 +4179,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  money: 0
   sleepButton: {fileID: 1283089197}
   dayCounter: 1
   dayCounterText: {fileID: 1666619738}
@@ -4204,6 +4203,11 @@ MonoBehaviour:
   animatorController:
   - {fileID: 9100000, guid: 4feae0d9f8b744b428aadf514ce9aeff, type: 2}
   - {fileID: 9100000, guid: 74748bc5225a3a84ab8fc8b3b8d0f763, type: 2}
+  EvolveSprite:
+  - {fileID: -388998084, guid: 00aead80334a2db448c927d22e496cab, type: 3}
+  - {fileID: 21300000, guid: 3b8a0a8eb3faea048b6ad730209309fa, type: 3}
+  - {fileID: 21300000, guid: d876d1e5488531c49b4f5e0ee9f9b0b7, type: 3}
+  - {fileID: 21300000, guid: 98766616bf2088343872a5d43e14989c, type: 3}
   brush: {fileID: 997139040}
   brushTargets:
   - {fileID: 43804963}
@@ -4251,7 +4255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9586861bed2cdd46b997d991b1bbad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterGameObject: {fileID: 0}
   items:
     keys: []
     values: 
@@ -4260,9 +4263,6 @@ MonoBehaviour:
   itemNum:
   - {fileID: 42832433}
   anim: {fileID: 42832437}
-  skin1: {fileID: 0}
-  skin2: {fileID: 0}
-  skin3: {fileID: 0}
   tamagotchi: {fileID: 310265813}
   OpenWithItemType: 
 --- !u!114 &310265817
@@ -9752,7 +9752,6 @@ GameObject:
   - component: {fileID: 711377536}
   - component: {fileID: 711377535}
   - component: {fileID: 711377534}
-  - component: {fileID: 711377533}
   m_Layer: 5
   m_Name: menu3
   m_TagString: Untagged
@@ -9781,19 +9780,6 @@ RectTransform:
   m_AnchoredPosition: {x: 875.57, y: 1556}
   m_SizeDelta: {x: 233.1315, y: 140.6477}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &711377533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 711377531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26ee15c5899d92040892ddd18f19dad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panelToActivate: {fileID: 1112547356}
 --- !u!114 &711377534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32029,7 +32015,6 @@ GameObject:
   - component: {fileID: 1968619033}
   - component: {fileID: 1968619032}
   - component: {fileID: 1968619031}
-  - component: {fileID: 1968619034}
   m_Layer: 5
   m_Name: menu1
   m_TagString: Untagged
@@ -32152,19 +32137,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1968619029}
   m_CullTransparentMesh: 1
---- !u!114 &1968619034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1968619029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26ee15c5899d92040892ddd18f19dad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panelToActivate: {fileID: 485920295}
 --- !u!1 &1987843180
 GameObject:
   m_ObjectHideFlags: 0
