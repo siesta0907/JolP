@@ -27,7 +27,8 @@ public class Tamagotchi : MonoBehaviour
     public Text cleanlinessText;
     public Text socialText;
     public Text moneyText;
-    public GameObject endingPanel; // 엔딩 패널의 참조
+    public Canvas endingCanvas; // 엔딩 화면 참조
+    public Canvas ScreenHiding;
 
     // 캐릭터가 더러워지는 과정 다루는 변수
 
@@ -43,6 +44,7 @@ public class Tamagotchi : MonoBehaviour
     public GameObject TrainErrorPanel; // 스킨 에러 메시지를 표시할 패널
 
     public GameObject PlayErrorPanel; // 스킨 에러 메시지를 표시할 패널
+    public inventoryItemClick inventoryItemClick;
 
     public Image EggMon;
     public Animator animator;
@@ -50,6 +52,21 @@ public class Tamagotchi : MonoBehaviour
     public Sprite[] EvolveSprite;
 
     private bool isEvolve = false;
+
+    public static Tamagotchi instance; // 싱글턴 인스턴스
+    public Canvas TrainCanvas;
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // 다마고치의 초기화 함수
     void Start()
@@ -81,23 +98,44 @@ public class Tamagotchi : MonoBehaviour
     // 프레임마다 호출되는 업데이트 함수
     void Update()
     {
-        if (state != State.DEAD)
+        if (state != State.DEAD && state != State.ENDING)
         {
             CheckForEvolution();
 
-            if (state == State.CHILD) // CHILD 상태에서만 dirtinessLevel 업데이트
+            if (state == State.CHILD)
             {
                 UpdateDirtinessLevel();
             }
 
-            // 10일이 지나면 엔딩을 트리거
+            // 체력 검사
+            if (EggMonStat.health <= 0)
+            {
+                TriggerEndingDueToHealth();
+                return; // 체력이 0 이하면 나머지 업데이트 로직을 수행하지 않음
+            }
+
             if (dayCounter > 10)
             {
                 TriggerEnding();
             }
-
         }
     }
+
+    public void TriggerEndingDueToHealth()
+    {
+        state = State.DEAD;
+
+        // 모든 캔버스를 찾아서 메인 캔버스와 엔딩 캔버스를 제외하고 비활성화
+        
+        TrainCanvas.gameObject.SetActive(false);
+        ScreenHiding.gameObject.SetActive(false);
+        // 엔딩 캔버스를 활성화
+        endingCanvas.gameObject.SetActive(true);
+        endingCanvas.transform.SetAsLastSibling(); // 엔딩 캔버스를 최상위로 설정
+        Debug.Log("다마고치가 체력 부족으로 사망했습니다. 게임 오버!");
+    }
+
+
 
     // 잠자기 기능을 수행하는 메서드
     public void Sleep()
@@ -118,6 +156,11 @@ public class Tamagotchi : MonoBehaviour
 
     // 먹이주기 기능을 수행하는 메서드
     public void Feed()
+    {
+        // 먹이 주기에 대한 로직 추가
+    }
+
+    public void Work()
     {
         // 먹이 주기에 대한 로직 추가
     }
@@ -146,6 +189,13 @@ public class Tamagotchi : MonoBehaviour
     // 놀아주기 기능을 수행하는 메서드
     public void Play()
     {
+
+        if (state == State.EGG)
+        {
+            PlayErrorPanel.SetActive(true);
+            Debug.Log("EGG 상태에서는 장난감을 사용할 수 없습니다.");
+        }
+
         if (state == State.CHILD)
         {
             // CHILD 상태일 때 훈련 로직 수행
@@ -339,17 +389,54 @@ public class Tamagotchi : MonoBehaviour
     }
     public void RestartGame()
     {
+        ResetGameState();
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    // 게임 상태를 초기화하는 메서드
+    private void ResetGameState()
+    {
+        // 여기에 모든 게임 상태를 초기화하는 코드를 추가
+        // 예: 체력, 스탯, UI 업데이트, 에러 패널 비활성화 등
 
+        // 게임 로직 상태 초기화
+        state = State.EGG;
+        dayCounter = 1;
+        EggMonStat.InitializeStat(); // 이 부분은 EggMonStat 클래스 내에 적절한 초기화 메서드가 정의되어 있어야 합니다.
+
+        // UI 업데이트
+        UpdateDayCounterUI();
+        UpdateDirtinessLevel();
+
+        // 스탯 텍스트 UI 초기화
+        hungerText.text = "100";
+        trainingText.text = "100";
+        playfulnessText.text = "100";
+        cleanlinessText.text = "100";
+        socialText.text = "100";
+        moneyText.text = "100";
+
+        // 기타 UI 컴포넌트 초기화
+        errorMessagePanel.SetActive(false);
+        EGGTalkPanel.SetActive(false);
+        TrainErrorPanel.SetActive(false);
+        PlayErrorPanel.SetActive(false);
+
+        // 캐릭터 스프라이트와 애니메이션 초기화
+        EggMon.sprite = EvolveSprite[0];
+        animator.runtimeAnimatorController = animatorController[0];
+
+        // 게임 속도 정상화
+        Time.timeScale = 1;
+    }
     public void TriggerEnding()
     {
-        state = State.ENDING; // 게임 상태를 엔딩으로 변경
-                              // 게임을 멈추거나 엔딩 관련 UI를 활성화하는 로직 추가
-        endingPanel.SetActive(true);
+        state = State.ENDING;
+        endingCanvas.transform.SetAsLastSibling(); // Ensure the ending panel is the topmost UI element
+        Time.timeScale = 0;
+        endingCanvas.gameObject.SetActive(true);
         Debug.Log("게임 엔딩 도달!");
-
-        
     }
+
 
 }

@@ -118,149 +118,170 @@ public class Inventory : MonoBehaviour
 
         if (QuestionConfirmController.isYes == true)
         {
-            // 아이템 효과 적용
-            foreach (var stat in item.itemEffect)
+            // EGG 상태에서 장난감 사용 시 에러 메시지 표시하고 스탯 증가 없이 리턴
+            if (tamagotchi.state == Tamagotchi.State.EGG && item.itemType == "Toy")
             {
-                EggMonStat.IncreaseStat(stat.Key, stat.Value);
-                Debug.Log(string.Format($"{stat.Key} 스탯이 {stat.Value}만큼 증가하였습니다."));
+                Debug.Log("EGG 상태에서는 장난감을 사용할 수 없습니다.");
             }
-
-            // 아이템 수량 감소
-            items[item] -= 1;
-
-            /// 아이템 사용 애니메이션 실행
-
-            /// 알 상태일 때
-
-            // 알 상태일 때 애니메이션 실행
-            if (tamagotchi.state == Tamagotchi.State.EGG)
+            else if (tamagotchi.state == Tamagotchi.State.TEEN && item.itemType == "Toy")
             {
-                // "Apple", "Can", "Steak" 아이템에 대한 알 상태 애니메이션
-                if (item.itemName == "Apple")
-                {
-                 //   EggMonStat.IncreaseStat("health", 30);
-                    StartCoroutine(PlayAnimationRepeat("Eggeat", 2));
+                Debug.Log("EGG 상태에서는 장난감을 사용할 수 없습니다.");
 
-                    // 에러 패널 비활성화
-                    tamagotchi.errorMessagePanel.SetActive(false);
-                }
-                if (item.itemName == "Can" )
-                {
-                   // EggMonStat.IncreaseStat("full", 30);
-                    StartCoroutine(PlayAnimationRepeat("Eggeat", 2));                    // 에러 패널 비활성화
-                    tamagotchi.errorMessagePanel.SetActive(false);
-                }
-                if (item.itemName == "Steak")
-                {
-                   // EggMonStat.IncreaseStat("health", 100);
-                    StartCoroutine(PlayAnimationRepeat("Eggeat", 2));                    // 에러 패널 비활성화
-                    tamagotchi.errorMessagePanel.SetActive(false);
-                }
-                if (item.itemName == "Skin Berry" || item.itemName == "Skin Bread" || item.itemName == "Skin Rabbit")
-                {
-                    tamagotchi.errorMessagePanel.SetActive(true);
-                    items[item] += 1;
-
-                }
             }
-
-
-            // Child 상태일 때
-            if (tamagotchi.state == Tamagotchi.State.CHILD)
+            else if (tamagotchi.state == Tamagotchi.State.ADULT && item.itemType == "Toy")
             {
-                // CHILD 상태에서의 아이템 사용 및 애니메이션 로직
-                // 예: "Apple" 아이템 사용 시
-                if (item.itemName == "Apple" && item.Animation_Motion != null)
-                {
-                   // EggMonStat.IncreaseStat("health", 30);
+                Debug.Log("EGG 상태에서는 장난감을 사용할 수 없습니다.");
 
-                    StartCoroutine(PlayAnimationRepeat("isEat", 3));
-                    tamagotchi.errorMessagePanel.SetActive(false);
-                }
-                else if (item.itemName == "Can" && item.Animation_Motion != null)
+            }
+            else
+            {
+                // 아이템 효과 적용
+                foreach (var stat in item.itemEffect)
                 {
-                   // EggMonStat.IncreaseStat("full", 30);
-
-                    StartCoroutine(PlayAnimationRepeat("EatCan", 3));
-                }
-                else if (item.itemName == "Steak" && item.Animation_Motion != null)
-                {
-                   // EggMonStat.IncreaseStat("health", 100);
-
-                    StartCoroutine(PlayAnimationRepeat("EatSteak", 3));
+                    EggMonStat.IncreaseStat(stat.Key, stat.Value);
+                    Debug.Log(string.Format($"{stat.Key} 스탯이 {stat.Value}만큼 증가하였습니다."));
                 }
 
+                
+
+                /// 아이템 사용 애니메이션 실행
+
+                /// 알 상태일 때
+
+                // 알 상태일 때 애니메이션 실행
+                if (tamagotchi.state == Tamagotchi.State.EGG)
+                {
+                    // "Apple", "Can", "Steak" 아이템에 대한 알 상태 애니메이션
+                    if (item.itemName == "Apple")
+                    {
+                        //   EggMonStat.IncreaseStat("health", 30);
+                        StartCoroutine(PlayAnimationRepeat("Eggeat", 2));
+
+                        // 에러 패널 비활성화
+                        tamagotchi.errorMessagePanel.SetActive(false);
+                    }
+                    if (item.itemName == "Can")
+                    {
+                        // EggMonStat.IncreaseStat("full", 30);
+                        StartCoroutine(PlayAnimationRepeat("Eggeat", 2));                    // 에러 패널 비활성화
+                        tamagotchi.errorMessagePanel.SetActive(false);
+                    }
+                    if (item.itemName == "Steak")
+                    {
+                        // EggMonStat.IncreaseStat("health", 100);
+                        StartCoroutine(PlayAnimationRepeat("Eggeat", 2));                    // 에러 패널 비활성화
+                        tamagotchi.errorMessagePanel.SetActive(false);
+                    }
+                    if (item.itemName == "Skin Berry" || item.itemName == "Skin Bread" || item.itemName == "Skin Rabbit")
+                    {
+                        tamagotchi.errorMessagePanel.SetActive(true);
+                        items[item] += 1;
+
+                    }
+                }
+
+
+                // Child 상태일 때
+                if (tamagotchi.state == Tamagotchi.State.CHILD)
+                {
+                    // CHILD 상태에서의 아이템 사용 및 애니메이션 로직
+                    // 예: "Apple" 아이템 사용 시
+                    if (item.itemName == "Apple" && item.Animation_Motion != null)
+                    {
+                        // EggMonStat.IncreaseStat("health", 30);
+
+                        StartCoroutine(PlayAnimationRepeat("isEat", 3));
+                        tamagotchi.errorMessagePanel.SetActive(false);
+                    }
+                    else if (item.itemName == "Can" && item.Animation_Motion != null)
+                    {
+                        // EggMonStat.IncreaseStat("full", 30);
+
+                        StartCoroutine(PlayAnimationRepeat("EatCan", 3));
+                    }
+                    else if (item.itemName == "Steak" && item.Animation_Motion != null)
+                    {
+                        // EggMonStat.IncreaseStat("health", 100);
+
+                        StartCoroutine(PlayAnimationRepeat("EatSteak", 3));
+                    }
+
+
+                    // 장난감
+                    if (item.itemName == "Block")
+                    {
+                        // EggMonStat.IncreaseStat("playfulness", 30);
+
+                        //anim.SetBool("playMotion", true);
+                        StartCoroutine(PlayAnimationRepeat("playMotion", 1));
+
+                    }
+                    if (item.itemName == "Car")
+                    {
+                        // EggMonStat.IncreaseStat("playfulness", 50);
+
+                        //anim.SetBool("playMotion", true);
+                        StartCoroutine(PlayAnimationRepeat("playMotion", 1));
+
+                    }
+                    if (item.itemName == "Game")
+                    {
+                        // EggMonStat.IncreaseStat("playfulness", 90);
+
+                        //anim.SetBool("playMotion", true);
+                        StartCoroutine(PlayAnimationRepeat("playMotion", 1));
+
+                    }
+                    //스킨
+                    if (item.itemName == "Skin Berry")
+                    {
+                        //tamagotchi.ApplySkin("skin_char_berry"); // ApplySkin 호출, 배열의 첫 번째 스킨
+                        SkinOff();
+                        anim.SetBool("skin1", true);
+
+                    }
+                    else if (item.itemName == "Skin Bread")
+                    {
+                        //tamagotchi.ApplySkin("skin_char_bread"); // 배열의 두 번째 스킨
+                        SkinOff();
+                        anim.SetBool("skin2", true);
+
+                    }
+                    else if (item.itemName == "Skin Rabbit")
+                    {
+                        //tamagotchi.ApplySkin("skin_char_rabbit"); // 배열의 세 번째 스킨
+                        SkinOff();
+                        anim.SetBool("skin3", true);
+
+                    }
+                }
+
+                // TEEN 상태일때
+                else if (tamagotchi.state == Tamagotchi.State.TEEN || tamagotchi.state == Tamagotchi.State.ADULT)
+                {
+                    if (item.itemName == "Skin Berry" || item.itemName == "Skin Bread" || item.itemName == "Skin Rabbit")
+                    {
+                        tamagotchi.errorMessagePanel.SetActive(true);
+
+                    }
+
+                    if (item.itemName == "Block" || item.itemName == "Car" || item.itemName == "Game")
+                    {
+                        tamagotchi.errorMessagePanel.SetActive(true);
+
+                    }
+                }
+
+                // 수량이 0 이하이면 딕셔너리에서 아이템 제거
+                // 아이템 수량 감소
+                items[item] -= 1;
+                if (items[item] <= 0)
+                {
+                    items.Remove(item);
+                }
+
+            }
             
-            // 장난감
-                if (item.itemName == "Block")
-                {
-                    // EggMonStat.IncreaseStat("playfulness", 30);
-
-                    //anim.SetBool("playMotion", true);
-                    StartCoroutine(PlayAnimationRepeat("playMotion", 1));
-
-                }
-                if (item.itemName == "Car")
-                {
-                    // EggMonStat.IncreaseStat("playfulness", 50);
-
-                    //anim.SetBool("playMotion", true);
-                    StartCoroutine(PlayAnimationRepeat("playMotion", 1));
-
-                }
-                if (item.itemName == "Game")
-                {
-                    // EggMonStat.IncreaseStat("playfulness", 90);
-
-                    //anim.SetBool("playMotion", true);
-                    StartCoroutine(PlayAnimationRepeat("playMotion", 1));
-
-                }
-                //스킨
-                if (item.itemName == "Skin Berry")
-                {
-                    //tamagotchi.ApplySkin("skin_char_berry"); // ApplySkin 호출, 배열의 첫 번째 스킨
-                    SkinOff();
-                    anim.SetBool("skin1", true);
-
-                }
-                else if (item.itemName == "Skin Bread")
-                {
-                    //tamagotchi.ApplySkin("skin_char_bread"); // 배열의 두 번째 스킨
-                    SkinOff();
-                    anim.SetBool("skin2", true);
-
-                }
-                else if (item.itemName == "Skin Rabbit")
-                {
-                    //tamagotchi.ApplySkin("skin_char_rabbit"); // 배열의 세 번째 스킨
-                    SkinOff();
-                    anim.SetBool("skin3", true);
-
-                }
-            }
-
-            // TEEN 상태일때
-            else if (tamagotchi.state == Tamagotchi.State.TEEN || tamagotchi.state == Tamagotchi.State.ADULT)
-            {
-                if (item.itemName == "Skin Berry" || item.itemName == "Skin Bread" || item.itemName == "Skin Rabbit")
-                {
-                    tamagotchi.errorMessagePanel.SetActive(true);
-
-                }
-
-                if (item.itemName == "Block" || item.itemName == "Car" || item.itemName == "Game")
-                {
-                    tamagotchi.errorMessagePanel.SetActive(true);
-
-                }
-            }
-
-            // 수량이 0 이하이면 딕셔너리에서 아이템 제거
-            if (items[item] <= 0)
-            {
-                items.Remove(item);
-            }
 
             // 인벤토리 클리어 후 업데이트
             ClearInventory();

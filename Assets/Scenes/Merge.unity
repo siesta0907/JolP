@@ -1201,6 +1201,107 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45287994}
   m_CullTransparentMesh: 1
+--- !u!1 &45972668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 45972669}
+  - component: {fileID: 45972672}
+  - component: {fileID: 45972671}
+  - component: {fileID: 45972670}
+  m_Layer: 0
+  m_Name: EndingCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &45972669
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45972668}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 313176981}
+  m_Father: {fileID: 552054497}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 540, y: 1080}
+  m_SizeDelta: {x: 1080, y: 2160}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &45972670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45972668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &45972671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45972668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &45972672
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45972668}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &50636369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1494,7 +1595,7 @@ GameObject:
   - component: {fileID: 97328839}
   - component: {fileID: 97328841}
   - component: {fileID: 97328840}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3230,6 +3331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  tamagotchi: {fileID: 310265813}
 --- !u!114 &233156268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3367,6 +3469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  tamagotchi: {fileID: 0}
 --- !u!114 &233314977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4458,7 +4561,8 @@ MonoBehaviour:
   cleanlinessText: {fileID: 781636092}
   socialText: {fileID: 338844450}
   moneyText: {fileID: 215948539}
-  endingPanel: {fileID: 313176980}
+  endingCanvas: {fileID: 45972672}
+  ScreenHiding: {fileID: 1236957460}
   dirtinessSprites:
   - {fileID: 21300000, guid: 3b8a0a8eb3faea048b6ad730209309fa, type: 3}
   - {fileID: 21300000, guid: dabad7284917c124783e03c8c6087836, type: 3}
@@ -4471,6 +4575,7 @@ MonoBehaviour:
   EGGTalkPanel: {fileID: 1244885594}
   TrainErrorPanel: {fileID: 1504720595}
   PlayErrorPanel: {fileID: 1426649735}
+  inventoryItemClick: {fileID: 0}
   EggMon: {fileID: 42832435}
   animator: {fileID: 42832437}
   animatorController:
@@ -4483,6 +4588,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3b8a0a8eb3faea048b6ad730209309fa, type: 3}
   - {fileID: 21300000, guid: d876d1e5488531c49b4f5e0ee9f9b0b7, type: 3}
   - {fileID: 21300000, guid: 98766616bf2088343872a5d43e14989c, type: 3}
+  TrainCanvas: {fileID: 1200907515}
   brush: {fileID: 997139040}
   brushTargets:
   - {fileID: 43804963}
@@ -4592,13 +4698,13 @@ GameObject:
   - component: {fileID: 313176981}
   - component: {fileID: 313176983}
   - component: {fileID: 313176982}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: EndingPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &313176981
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4606,14 +4712,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 313176980}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1516077520}
-  m_Father: {fileID: 552054497}
-  m_RootOrder: 12
+  m_Father: {fileID: 45972669}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5586,7 +5692,7 @@ GameObject:
   - component: {fileID: 361473671}
   - component: {fileID: 361473673}
   - component: {fileID: 361473672}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8723,9 +8829,9 @@ RectTransform:
   - {fileID: 1940435112}
   - {fileID: 907498953}
   - {fileID: 1345967150}
+  - {fileID: 45972669}
   - {fileID: 1564922259}
   - {fileID: 1300600952}
-  - {fileID: 313176981}
   - {fileID: 1504720596}
   - {fileID: 1426649736}
   m_Father: {fileID: 0}
@@ -9806,7 +9912,7 @@ GameObject:
   - component: {fileID: 662717929}
   - component: {fileID: 662717928}
   - component: {fileID: 662717927}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13220,6 +13326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  tamagotchi: {fileID: 0}
 --- !u!114 &859215765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14809,6 +14916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  tamagotchi: {fileID: 0}
 --- !u!1 &943534874
 GameObject:
   m_ObjectHideFlags: 0
@@ -19953,7 +20061,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1236957461
 RectTransform:
@@ -19962,7 +20070,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236957457}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
@@ -20713,6 +20821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  tamagotchi: {fileID: 0}
 --- !u!114 &1276388519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21029,7 +21138,7 @@ RectTransform:
   - {fileID: 2113624217}
   - {fileID: 1917796695}
   m_Father: {fileID: 552054497}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -21733,6 +21842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  tamagotchi: {fileID: 0}
 --- !u!114 &1377986214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24461,7 +24571,7 @@ GameObject:
   - component: {fileID: 1516077523}
   - component: {fileID: 1516077522}
   - component: {fileID: 1516077521}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25293,7 +25403,7 @@ RectTransform:
   - {fileID: 1507839116}
   - {fileID: 837269985}
   m_Father: {fileID: 552054497}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
