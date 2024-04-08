@@ -27,7 +27,9 @@ public class Tamagotchi : MonoBehaviour
     public Text cleanlinessText;
     public Text socialText;
     public Text moneyText;
-    public Canvas endingCanvas; // 엔딩 화면 참조
+    public Canvas leave_endingCanvas; // 엔딩 화면 참조
+    public Canvas rich_endingCanvas;
+    public Canvas pirate_endingCanvas;
     public Canvas ScreenHiding;
 
     // 캐릭터가 더러워지는 과정 다루는 변수
@@ -55,6 +57,7 @@ public class Tamagotchi : MonoBehaviour
 
     public static Tamagotchi instance; // 싱글턴 인스턴스
     public Canvas TrainCanvas;
+    public Canvas WorkCanvas;
     void Awake()
     {
         if (instance == null)
@@ -110,9 +113,24 @@ public class Tamagotchi : MonoBehaviour
             // 체력 검사
             if (EggMonStat.health <= 0)
             {
-                TriggerEndingDueToHealth();
+                TriggerEndingDueToHealth(); // 가출 엔딩
                 return; // 체력이 0 이하면 나머지 업데이트 로직을 수행하지 않음
             }
+
+            // 코인이 3000 이상일 때 특별 엔딩 조건 체크
+            if (MoneyManager.money >= 3000)
+            {
+                TriggerSpecialEnding("Coin");
+                return;
+            }
+
+            // 지능이 5000 이상일 때 또 다른 특별 엔딩 조건 체크
+            if (EggMonStat.intellect >= 100)
+            {
+                TriggerSpecialEnding("Intelligence");
+                return;
+            }
+
 
             if (dayCounter > 10)
             {
@@ -128,10 +146,11 @@ public class Tamagotchi : MonoBehaviour
         // 모든 캔버스를 찾아서 메인 캔버스와 엔딩 캔버스를 제외하고 비활성화
         
         TrainCanvas.gameObject.SetActive(false);
+        WorkCanvas.gameObject.SetActive(false);
         ScreenHiding.gameObject.SetActive(false);
         // 엔딩 캔버스를 활성화
-        endingCanvas.gameObject.SetActive(true);
-        endingCanvas.transform.SetAsLastSibling(); // 엔딩 캔버스를 최상위로 설정
+        leave_endingCanvas.gameObject.SetActive(true);
+        leave_endingCanvas.transform.SetAsLastSibling(); // 엔딩 캔버스를 최상위로 설정
         Debug.Log("다마고치가 체력 부족으로 사망했습니다. 게임 오버!");
     }
 
@@ -432,11 +451,52 @@ public class Tamagotchi : MonoBehaviour
     public void TriggerEnding()
     {
         state = State.ENDING;
-        endingCanvas.transform.SetAsLastSibling(); // Ensure the ending panel is the topmost UI element
+        leave_endingCanvas.transform.SetAsLastSibling(); // Ensure the ending panel is the topmost UI element
         Time.timeScale = 0;
-        endingCanvas.gameObject.SetActive(true);
-        Debug.Log("게임 엔딩 도달!");
+        leave_endingCanvas.gameObject.SetActive(true);
+        Debug.Log("게임 엔딩 도달 가출!");
     }
 
+    // 특별 엔딩을 처리하는 메서드
+    public void TriggerSpecialEnding(string endingType)
+    {
+        switch (endingType)
+        {
+            case "Coin":
+                // 코인에 의한 엔딩 처리
+                state = State.ENDING;
+                TrainCanvas.gameObject.SetActive(false);
+                WorkCanvas.gameObject.SetActive(false);
+                ScreenHiding.gameObject.SetActive(false);
+                rich_endingCanvas.transform.SetAsLastSibling(); // Ensure the ending panel is the topmost UI element
+                Time.timeScale = 0;
+                rich_endingCanvas.gameObject.SetActive(true);
+                Debug.Log("코인이 3000 이상입니다. 부자 엔딩!");
+                break;
+            case "Intelligence":
+                // 지능에 의한 엔딩 처리
+                state = State.ENDING;
+                TrainCanvas.gameObject.SetActive(false);
+                WorkCanvas.gameObject.SetActive(false);
+                ScreenHiding.gameObject.SetActive(false);
+                pirate_endingCanvas.transform.SetAsLastSibling(); // Ensure the ending panel is the topmost UI element
+                Time.timeScale = 0;
+                pirate_endingCanvas.gameObject.SetActive(true);
+                Debug.Log("지능이 5000 이상입니다. 지능 엔딩!");
+              
+                break;
+            /*default:
+                // 기본 엔딩
+                TriggerEnding();
+                break;*/
+        }
+
+       /* // 엔딩 상태로 변경
+        state = State.ENDING;
+        // 엔딩 캔버스를 활성화하고 최상위로 설정
+        leave_endingCanvas.transform.SetAsLastSibling();
+        leave_endingCanvas.gameObject.SetActive(true);*/
+        Time.timeScale = 0; // 게임 시간 정지
+    }
 
 }

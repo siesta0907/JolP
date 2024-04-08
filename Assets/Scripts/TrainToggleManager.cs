@@ -28,6 +28,7 @@ public class TrainToggleManager : MonoBehaviour
     public void ShowFirstPanel()
     {
         EggMonStat.DecreaseStat("health", 60); // 특정 상태 감소 -> 검술 훈련
+        EggMonStat.IncreaseStat("intellect", 50);
         ActivatePanel(firstPanel);
 
         
@@ -40,7 +41,10 @@ public class TrainToggleManager : MonoBehaviour
         ActivatePanel(secondPanel);
 
         EggMonStat.DecreaseStat("health", 40); // 특정 상태 감소 -> 무용
+        EggMonStat.IncreaseStat("intellect", 30);
+
         StartCoroutine(ShowRewardImageAfterDelay(secondImage, 3f));
+
 
 
     }
@@ -49,6 +53,7 @@ public class TrainToggleManager : MonoBehaviour
     {
         ActivatePanel(thirdPanel);
         EggMonStat.DecreaseStat("health", 20); // 특정 상태 감소 -> 예절
+        EggMonStat.IncreaseStat("intellect", 20);
 
         StartCoroutine(ShowRewardImageAfterDelay(thirdImage, 3f));
 
@@ -59,6 +64,7 @@ public class TrainToggleManager : MonoBehaviour
     {
         ActivatePanel(fourthPanel);
         EggMonStat.DecreaseStat("health", 30); // 특정 상태 감소 -> 사고력
+        EggMonStat.IncreaseStat("intellect", 60);
 
         StartCoroutine(ShowRewardImageAfterDelay(fourthImage, 3f));
 
