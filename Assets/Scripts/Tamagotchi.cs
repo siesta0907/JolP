@@ -316,6 +316,8 @@ public class Tamagotchi : MonoBehaviour
             case State.EGG:
                 state = State.CHILD;
                 Debug.Log("EGG에서 CHILD로 진화하였습니다!");
+                online_play.playerIcon = "ch_n1_01";
+                online_play.SavePlayerData(online_play.playerIcon);
                 UpdateEvolutionStage(1);
                 animator.runtimeAnimatorController = animatorController[1];
                 break;
@@ -324,6 +326,8 @@ public class Tamagotchi : MonoBehaviour
                 state = State.TEEN;
                 Debug.Log("CHILD에서 TEEN으로 진화하였습니다!");
                 UpdateEvolutionStage(2);
+                online_play.playerIcon = "ch_n1_02";
+                online_play.SavePlayerData(online_play.playerIcon);
                 animator.runtimeAnimatorController = animatorController[2];
                 break;
 
@@ -331,6 +335,8 @@ public class Tamagotchi : MonoBehaviour
                 state = State.ADULT;
                 Debug.Log("TEEN에서 ADULT로 진화하였습니다!");
                 UpdateEvolutionStage(3);
+                online_play.playerIcon = "ch_n1_03";
+                online_play.SavePlayerData(online_play.playerIcon);
                 animator.runtimeAnimatorController = animatorController[3];
                 break;
 
